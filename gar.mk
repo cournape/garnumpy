@@ -10,7 +10,7 @@
 
 
 # Comment this out to make much verbosity
-.SILENT:
+#.SILENT:
 
 #ifeq ($(origin GARDIR), undefined)
 #GARDIR := $(CURDIR)/../..
@@ -63,12 +63,14 @@ $(DESTIMG)_GARHOST ?= $(main_GARHOST)
 
 # Default image tools
 $(DESTIMG)_CC ?= $(main_CC)
+$(DESTIMG)_F77 ?= $(main_F77)
 $(DESTIMG)_CXX ?= $(main_CXX)
 $(DESTIMG)_LD ?= $(main_LD)
 
 # Default image tool options
 $(DESTIMG)_CPPFLAGS ?= $(main_CPPFLAGS)
 $(DESTIMG)_CFLAGS ?= $(main_CFLAGS)
+$(DESTIMG)_F77FLAGS ?= $(main_F77FLAGS)
 #$(DESTIMG)_CXXFLAGS ?= $(main_CXXFLAGS)
 $(DESTIMG)_LDFLAGS ?= $(main_LDFLAGS)
 
@@ -108,12 +110,14 @@ GARTARGET ?= $(GARHOST)
 # Tools
 CC = $($(DESTIMG)_CC)
 CXX = $($(DESTIMG)_CXX)
+F77 = $($(DESTIMG)_F77)
 LD = $($(DESTIMG)_LD)
 
 # Tool options -- These are append-mode assignments so that packages may
 # provide additional tool options.
 CPPFLAGS += $($(DESTIMG)_CPPFLAGS)
 CFLAGS += $($(DESTIMG)_CFLAGS)
+F77FLAGS += $($(DESTIMG)_F77FLAGS)
 #CXXFLAGS += $($(DESTIMG)_CXXFLAGS)
 LDFLAGS += $($(DESTIMG)_LDFLAGS)
 

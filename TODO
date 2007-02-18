@@ -1,4 +1,20 @@
-Last Change: Tue Feb 13 07:00 PM 2007 J
+Last Change: Sun Feb 18 07:00 PM 2007 J
+    - add BLAS + LAPACK info in numpy/site.cfg + scipy/site.cfg ? Or using BLAS + LAPACK env variables ?
     - fetch from SVN instead of release as option
     - test target
     - sync env values in startgarnumpy and in gar.conf.mk
+
+Values to modifify:
+    - python version in startnumpy.sh
+    - SCIPYSANDPKG: a string of list of scipy packages to enable
+    - by default: 
+
+For ubuntu (edgy at least):
+    - numpy:
+        - gcc
+        - g++
+        - gfortran
+        - python
+        - atlas3-base-dev
+    - mpl:
+        - python-gtk2-dev

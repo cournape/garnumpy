@@ -26,6 +26,7 @@ BUILDDEPS =
 #CONFIGURE_SCRIPTS = $(WORKSRC)/configure
 #BUILD_SCRIPTS = $(WORKSRC)/Makefile
 #INSTALL_SCRIPTS = $(WORKSRC)/Makefile
+CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 
@@ -41,11 +42,16 @@ include ../../gar.mk
 
 pre-everything:
 
+configure-custom:
+	#@cd $(WORKSRC) && for i in "$(SCIPYSANDPKG)"; do echo "$$i" >> Lib/sandbox/enabled_packages.txt; done;
+	cd $(WORKSRC) && BLAS=$(BLASLOCATION) LAPACK=$(LAPACKLOCATION) PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py config
+	@$(MAKECOOKIE)
+
 build-custom:
-	@cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py build
+	@cd $(WORKSRC) && BLAS=$(BLASLOCATION) LAPACK=$(LAPACKLOCATION) PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py build
 	@$(MAKECOOKIE)
 
 install-custom:
-	@cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py install --prefix=$(prefix)
+	@cd $(WORKSRC) && BLAS=$(BLASLOCATION) LAPACK=$(LAPACKLOCATION) PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py install --prefix=$(prefix)
 	@$(MAKECOOKIE)
 

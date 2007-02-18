@@ -26,7 +26,7 @@ ALL_DESTIMGS = main build rootbin lnximg singularity
 # /usr/etc or /usr/var
 
 # Directory config for the "main" image
-main_prefix ?= $(HOME)/garnumpy
+main_prefix ?= /usr/media/src/src/dsp/garnumpy/tmpinstall/garnumpy
 main_exec_prefix = $(prefix)
 main_bindir = $(exec_prefix)/bin
 main_sbindir = $(exec_prefix)/sbin
@@ -79,15 +79,21 @@ build_LDFLAGS += -L$(DESTDIR)$(libdir)
 #main_CC ?= $(GARHOST)-gcc
 main_CC ?= gcc
 main_CXX ?= g++
+main_F77 ?= g77
 #main_LD ?= $(GARHOST)-ld
 main_LD ?= ld
 build_CC ?= gcc
 build_CXX ?= g++
 build_LD ?= ld
 
+#===========================
 # Sensible compiler defaults
+#===========================
 CC ?= gcc
 CXX ?= g++
+F77 ?= g77
+
+RANLIB=echo
 
 # GARCH and GARHOST for main.  Override these for cross-compilation
 #main_GARCH ?= i386
@@ -143,10 +149,50 @@ FILE_SITES = file://$(FILEDIR)/ file://$(GARCHIVEDIR)/
 ## Extra libs to include with gar.mk
 #GAR_EXTRA_LIBS += bbc.lib.mk
 
+#=======================
+# Python related option
+#=======================
 # If you want to use a different version of python everywhere
 # change this
-#PYTHON = $(shell which python)
-PYTHON = python2.5
+PYTHON = $(shell which python)
 PYVER = $(shell $(PYTHON) -c "import sys; print sys.version[:3]")
 PYTHONPATH=$(main_libdir)/python$(PYVER)/site-packages:$(main_libdir)/python$(PYVER)/site-packages/gtk-2.0
+
+#================
+# BLAS/LAPACK OPTIONS 
+#================
+# Based on scipy install info
+BLAS_F77_OPTS += -fno-second-underscore -O2 -c
+BLASNAME	= libfblas.a
+BLASLOCATION	= $(libdir)/$(BLASNAME)
+
+# (OS: LINUX for linux and other free unix such as FreeBSD, 
+# other options are SUN4U, ALPHA, HPPA, etc... those are the suffix in 
+# the INSTALL directory of lapack sources)
+LAPACKOSNAME	= LINUX
+LAPACKNAME		= libflapack.a
+LAPACKLOCATION	= $(libdir)/$(LAPACKNAME)
+
+#======================
+# SCIPY related options
+#======================
+# space separated list of package in scipy sandbox to add
+#SCIPYSANDPKG = "pyem svm"
+SCIPYSANDPKG = 
+
+#============
+# GNU TOOLS
+#============
+# GARNOME uses the GNU tool chain. On some systems the GNU tools may have
+# different names and may be located in non-standard places.
+# If so, change these accordingly.
+AWK = awk
+FIND = find
+GREP = grep
+GPG = gpg
+GZIP = gzip
+MAKE = make
+MD5 = md5sum
+SED = sed
+TAR = tar
 
