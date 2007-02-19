@@ -44,6 +44,9 @@ pre-everything:
 
 configure-custom:
 	#@cd $(WORKSRC) && for i in "$(SCIPYSANDPKG)"; do echo "$$i" >> Lib/sandbox/enabled_packages.txt; done;
+	# Change default path when looking for libs to fake dir,
+	# so we can set everything by env variables
+	@cd $(WORKSRC) && echo "[DEFAULT]\\nlibrary_dirs = /fooblou" > site.cfg
 	cd $(WORKSRC) && BLAS=$(BLASLOCATION) LAPACK=$(LAPACKLOCATION) PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py config
 	@$(MAKECOOKIE)
 
