@@ -20,7 +20,7 @@ endef
 
 # Dependencies are of the form categorydir/packagedir
 # LIBDEPS are for libraries, and DEPENDS are for everything else
-LIBDEPS = platform/blas platform/lapack
+LIBDEPS = bootstrap/blas bootstrap/lapack
 DEPENDS =
 # Builddeps are installed in the build DESTIMG
 BUILDDEPS =

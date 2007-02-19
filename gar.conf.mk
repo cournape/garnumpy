@@ -93,8 +93,6 @@ CC ?= gcc
 CXX ?= g++
 F77 ?= g77
 
-RANLIB=echo
-
 # GARCH and GARHOST for main.  Override these for cross-compilation
 #main_GARCH ?= i386
 #main_GARHOST ?= i386-pc-linux-gnu
@@ -158,19 +156,34 @@ PYTHON = $(shell which python)
 PYVER = $(shell $(PYTHON) -c "import sys; print sys.version[:3]")
 PYTHONPATH=$(main_libdir)/python$(PYVER)/site-packages:$(main_libdir)/python$(PYVER)/site-packages/gtk-2.0
 
-#================
-# BLAS/LAPACK OPTIONS 
-#================
-# Based on scipy install info
-BLAS_F77_OPTS += -fno-second-underscore -O2 -c
-BLASNAME	= libfblas.a
+#======================
+# General BLAS/LAPACK 
+#======================
+# numpy/scipy needs blas and lapack libraries for fast linear algebra computation.
+# Here, set your libraries for blas and lapack. 
+# TODO: numpy and scipy needs shared or static is OK ?
+
+# If 1, we don't build any blas/lapack (numpy and scipy will be supposed to be able
+# to find them, then, wherever they are).
+# TODO: we could set some variables to point system blas and lapack, and point them
+# to numpy and scipy ?
+USE_SYSTEM_BLAS	= 1
+
+# Set to 1 to force compiling atlas, and use it for all packages. (takes time)
+# Note that it builds a *complete* lapack.
+USE_GAR_ATLAS	= 0
+# Set to 1 to force compiling netlab blas and lapack (much faster to install, but
+# much slower than ATLAS in general)
+USE_GAR_BLASLAPACK	= 0
+
+#============================
+# Netlab BLAS/LAPACK OPTIONS 
+#============================
+BLAS_F77_OPTS 	+= -fno-second-underscore -O2 -c
+BLASNAME		= libf77blas.a
 BLASLOCATION	= $(libdir)/$(BLASNAME)
 
-# (OS: LINUX for linux and other free unix such as FreeBSD, 
-# other options are SUN4U, ALPHA, HPPA, etc... those are the suffix in 
-# the INSTALL directory of lapack sources)
-LAPACKOSNAME	= LINUX
-LAPACKNAME		= libflapack.a
+LAPACKNAME		= libf77lapack.a
 LAPACKLOCATION	= $(libdir)/$(LAPACKNAME)
 
 #======================
@@ -195,4 +208,6 @@ MAKE = make
 MD5 = md5sum
 SED = sed
 TAR = tar
+# Fake ranlib
+RANLIB=echo
 
