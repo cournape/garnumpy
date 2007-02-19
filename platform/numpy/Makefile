@@ -20,7 +20,7 @@ endef
 
 # Dependencies are of the form categorydir/packagedir
 # LIBDEPS are for libraries, and DEPENDS are for everything else
-LIBDEPS = bootstrap/blas bootstrap/lapack
+LIBDEPS = $(shell . ./blop.sh && get_numpy_dep $(BLASLAPACK) )
 DEPENDS =
 # Builddeps are installed in the build DESTIMG
 BUILDDEPS =
@@ -44,6 +44,7 @@ INSTALL_OVERRIDE_DIRS =
 include ../../gar.mk
 
 pre-everything:
+	echo $(LIBDEPS)
 
 configure-custom:
 	# Change default path when looking for libs to fake dir,

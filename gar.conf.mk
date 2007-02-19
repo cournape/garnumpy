@@ -161,27 +161,31 @@ PYTHONPATH=$(main_libdir)/python$(PYVER)/site-packages:$(main_libdir)/python$(PY
 #======================
 # numpy/scipy needs blas and lapack libraries for fast linear algebra computation.
 # Here, set your libraries for blas and lapack. 
-# TODO: numpy and scipy needs shared or static is OK ?
 
-# If 1, we don't build any blas/lapack (numpy and scipy will be supposed to be able
-# to find them, then, wherever they are).
-# TODO: we could set some variables to point system blas and lapack, and point them
-# to numpy and scipy ?
-USE_SYSTEM_BLAS	= 1
+# valid values for BLASLAPACK: atlas, system or netlib
+#BLASLAPACK	= system
+#BLASLAPACK	= atlas
+BLASLAPACK	= netlib
 
-# Set to 1 to force compiling atlas, and use it for all packages. (takes time)
-# Note that it builds a *complete* lapack.
-USE_GAR_ATLAS	= 0
-# Set to 1 to force compiling netlab blas and lapack (much faster to install, but
-# much slower than ATLAS in general)
-USE_GAR_BLASLAPACK	= 0
+# - system: assumes that blas lapack are available, you should set
+#   SYSTEM_BLAS_NAME, SYSTEM_BLAS_DIR, SYSTEM_LAPACK_DIR, SYSTEM_LAPACK_NAME
+#   should correspond to the values put in site.cfg
+#SYSTEM_BLAS_NAME='blas'
+#SYSTEM_BLAS_DIR='/usr/lib'
+#SYSTEM_LAPACK_NAME='lapack'
+#SYSTEM_LAPACK_DIR='/usr/lib'
+SYSTEM_BLAS_NAME=
+SYSTEM_BLAS_DIR=
+SYSTEM_LAPACK_NAME=
+SYSTEM_LAPACK_DIR=
+
 
 #============================
 # Netlab BLAS/LAPACK OPTIONS 
 #============================
 LAPACKOSNAME	= LINUX
 
-BLAS_F77_OPTS 	+= -fno-second-underscore -O2 -c
+BLAS_F77_OPTS 	+= -fno-second-underscore -O3 -c
 BLASNAME		= libf77blas.a
 BLASLOCATION	= $(libdir)/$(BLASNAME)
 
