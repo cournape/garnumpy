@@ -42,9 +42,9 @@ configure-custom:
 
 build-custom:
 	# default target include test, it seems
-	cd $(WORKSRC) &&  $(MAKE) FORTRAN=$(F77) LOADER=$(F77) BLASLIB="$(libdir)/$(BLASNAME)" LAPACKLIB=$(LAPACKNAME)
+	cd $(WORKSRC) &&  $(MAKE) FORTRAN=$(F77) LOADER=$(F77) BLASLIB="$(libdir)/$(NETLIB_BLAS_FULL_NAME)" LAPACKLIB=$(NETLIB_LAPACK_FULL_NAME)
 	@$(MAKECOOKIE)
 
 install-custom:
-	cd $(WORKSRC) && install -c $(LAPACKNAME) $(libdir)
+	cd $(WORKSRC) && install -c $(NETLIB_LAPACK_FULL_NAME) $(libdir)
 	@$(MAKECOOKIE)

@@ -180,17 +180,30 @@ SYSTEM_LAPACK_NAME=
 SYSTEM_LAPACK_DIR=
 
 
-#============================
-# Netlab BLAS/LAPACK OPTIONS 
-#============================
+#===========================================
+# Netlab BLAS/LAPACK OPTIONS  (Don't touch)
+#===========================================
 LAPACKOSNAME	= LINUX
 
-BLAS_F77_OPTS 	+= -fno-second-underscore -O3 -c
-BLASNAME		= libf77blas.a
-BLASLOCATION	= $(libdir)/$(BLASNAME)
+NETLIB_BLAS_F77_OPTS 	+= -fno-second-underscore -O3 -c
+NETLIB_BLAS_FULL_NAME	= libblas.a
+NETLIB_BLAS_NAME		= blas
+NETLIB_BLAS_LOCATION	= $(libdir)/$(NETLIB_BLAS_FULL_NAME)
 
-LAPACKNAME		= libf77lapack.a
-LAPACKLOCATION	= $(libdir)/$(LAPACKNAME)
+NETLIB_LAPACK_FULL_NAME	= liblapack.a
+NETLIB_LAPACK_NAME		= lapack
+NETLIB_LAPACK_LOCATION	= $(libdir)/$(NETLIB_LAPACK_FULL_NAME)
+
+#===========================================
+# ATLAS BLAS/LAPACK OPTIONS  (Don't touch)
+#===========================================
+ATLAS_BLAS_FULL_NAME	= libblas.a
+ATLAS_BLAS_NAME			= fblas
+ATLAS_BLAS_SLOCATION	= $(libdir)/$(ATLAS_BLAS_NAME)
+
+ATLAS_LAPACK_FULL_NAME	= liblapack.a
+ATLAS_LAPACK_NAME		= lapack
+ATLAS_LAPACK_LOCATION	= $(libdir)/$(ATLAS_LAPACK_NAME)
 
 #======================
 # SCIPY related options

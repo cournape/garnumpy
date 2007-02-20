@@ -52,11 +52,10 @@ post-extract:
 
 build-custom:
 	# build objects
-	@cd $(WORKSRC) && $(F77) $(BLAS_F77_OPTS) *.f
+	@cd $(WORKSRC) && $(F77) $(NETLIB_BLAS_F77_OPTS) *.f
 	# build static lib from it
-	cd $(WORKSRC) && $(AR) -r $(BLASNAME) *.o && $(RANLIB) $(BLASNAME)
+	@cd $(WORKSRC) && $(AR) -r $(NETLIB_BLAS_FULL_NAME) *.o && $(RANLIB) $(NETLIB_BLAS_FULL_NAME)
 	@$(MAKECOOKIE)
 
 install-custom:
-	echo "install -c $(DISTNAME)/$(BLASNAME) $(libdir)"
-	@cd $(WORKSRC) && install -c $(BLASNAME) $(libdir)
+	@cd $(WORKSRC) && install -c $(NETLIB_BLAS_FULL_NAME) $(libdir)

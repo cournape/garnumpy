@@ -48,8 +48,45 @@ get_numpy_dep()
     esac 
 }
 
-#get_blas_lapack $BLASLAPACK
-#if [ $? -eq 1 ]; then
-#    echo "Error while getting blas/lapack info, exciting..."
-#    exit 1;
-#fi
+# arg1: BLASLAPACK (possible values: system, etc... see gar.conf.mk)
+# arg1: BLASLAPACK (possible values: system, etc... see gar.conf.mk)
+get_numpy_sitecfg()
+{
+    case $1 in
+        "system")
+            echo "[blas]"
+            echo "library_dirs=$SYSTEM_BLAS_DIR"
+            echo "libraries=$SYSTEM_BLAS_NAME"
+            echo "[lapack]"
+            echo "library_dirs=$SYSTEM_LAPACK_DIR"
+            echo "libraries=$SYSTEM_LAPACK_NAME"
+            return 0
+            ;;
+        "atlas")
+            # Fake default to force our values
+            echo "[DEFAULT]\\nlibrary_dirs = /fooblou"
+            echo "[blas]"
+            echo "library_dirs=$ATLAS_BLAS_DIR"
+            echo "libraries=$ATLAS_BLAS_NAME"
+            echo "[lapack]"
+            echo "library_dirs=$ATLAS_LAPACK_DIR"
+            echo "libraries=$ATLAS_LAPACK_NAME"
+            return 0
+            ;;
+        "netlib")
+            # Fake default to force our values
+            echo "[DEFAULT]\\nlibrary_dirs = /fooblou"
+            echo "[blas]"
+            echo "library_dirs=$NETLIB_BLAS_DIR"
+            echo "libraries=$NETLIB_BLAS_NAME"
+            echo "[lapack]"
+            echo "library_dirs=$NETLIB_LAPACK_DIR"
+            echo "libraries=$NETLIB_LAPACK_NAME"
+            return 0
+            ;;
+        *)
+            echo "Unknown custom blas lapack: $1"
+            return 1
+            ;;
+    esac 
+}
