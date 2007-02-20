@@ -201,7 +201,7 @@ extract-%: cp-extract-%
 
 #################### PATCH RULES ####################
 
-PATCHDIR ?= $(WORKDIR)
+PATCHDIR ?= $(WORKSRC)
 PATCHDIRLEVEL ?= 1
 PATCHDIRFUZZ ?= 2
 GARPATCH = patch -d$(PATCHDIR) -p$(PATCHDIRLEVEL) -F$(PATCHDIRFUZZ)
@@ -221,7 +221,7 @@ gz-patch-%:
 # apply normal patches
 normal-patch-%:
 	@echo " ==> Applying patch $(DOWNLOADDIR)/$*"
-	@$(GARPATCH) <$(DOWNLOADDIR)/$*
+	$(GARPATCH) <$(DOWNLOADDIR)/$*
 	@$(MAKECOOKIE)
 
 # This is used by makepatch

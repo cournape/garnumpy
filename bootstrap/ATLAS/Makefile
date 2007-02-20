@@ -5,7 +5,7 @@ CATEGORIES =
 MASTER_SITES = http://kent.dl.sourceforge.net/math-atlas/
 
 DISTFILES = $(GARNAME)$(GARVERSION).tar.bz2
-PATCHFILES = 
+PATCHFILES = garnumpy-config.diff
 MAINTAINER = David Cournapeau <david@ar.media.kyoto-u.ac.jp>
 # GPL, GPL2, BSD, MIT, etc. Or add the URL to any custom license
 LICENSE = 
@@ -17,7 +17,7 @@ endef
 
 # Dependencies are of the form categorydir/packagedir
 # LIBDEPS are for libraries, and DEPENDS are for everything else
-LIBDEPS = bootstrap/lapack
+LIBDEPS = #bootstrap/lapack
 DEPENDS =
 # Builddeps are installed in the build DESTIMG
 BUILDDEPS =
@@ -47,14 +47,18 @@ post-extract:
 	@$(MAKECOOKIE)
 
 configure-custom:
-	@cd $(WORKSRC)/$(ATLOBJDIR) && /usr/media/src/src/dsp/garnumpy/garnumpy/bootstrap/ATLAS/work/main.d/atlas-3.7.28/configure -v 2
+	@echo "======================================="
+	@echo "		CONFIGURING ATLAS"
+	@echo "======================================="
+	@cd $(WORKSRC)/$(ATLOBJDIR) && ../configure 
+	@echo "======================================="
+	@echo "		CONFIGURING ATLAS DONE	"
+	@echo "======================================="
+	@$(MAKECOOKIE)
 
-#build-custom:
-#	# build objects
-#	@cd $(WORKSRC) && $(F77) $(NETLIB_BLAS_F77_OPTS) *.f
-#	# build static lib from it
-#	@cd $(WORKSRC) && $(AR) -r $(NETLIB_BLAS_FULL_NAME) *.o && $(RANLIB) $(NETLIB_BLAS_FULL_NAME)
-#	@$(MAKECOOKIE)
-#
+build-custom:
+	@cd $(WORKSRC)/$(ATLOBJDIR) && make
+	@$(MAKECOOKIE)
+
 #install-custom:
 #	@cd $(WORKSRC) && install -c $(NETLIB_BLAS_FULL_NAME) $(libdir)

@@ -1,0 +1,20 @@
+diff -Npru atlas-3.7.28.orig/CONFIG/src/atlconf_misc.c atlas-3.7.28/CONFIG/src/atlconf_misc.c
+--- atlas-3.7.28.orig/CONFIG/src/atlconf_misc.c	2007-02-20 23:46:47.000000000 +0900
++++ atlas-3.7.28/CONFIG/src/atlconf_misc.c	2007-02-20 23:47:01.000000000 +0900
+@@ -328,7 +328,15 @@ int CmndOneLine(char *targ, char *cmnd, 
+    {
+       fp = fopen(tnam, "r");
+       assert(fp);
+-      if (!fgets(ln, 2048, fp)) ln[0] = '\0';
++      if (!fgets(ln, 2048, fp)) {
++          ln[0] = '\0'; 
++      } else {
++          if (strncmp(ln, "make", 4) == 0) {
++              fprintf(stderr, "!!!! read another line\n");
++              fgets(ln, 2048, fp);
++              fprintf(stderr, "%s:%s, %d: %s\n", __FILE__, __func__,  __LINE__, ln);
++          }
++      }
+       fclose(fp);
+       return(0);
+    }
