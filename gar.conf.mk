@@ -26,7 +26,7 @@ ALL_DESTIMGS = main build rootbin lnximg singularity
 # /usr/etc or /usr/var
 
 # Directory config for the "main" image
-main_prefix ?= /usr/media/src/src/dsp/garnumpy/tmpinstall/garnumpy
+main_prefix ?= /home/david/garnumpy
 main_exec_prefix = $(prefix)
 main_bindir = $(exec_prefix)/bin
 main_sbindir = $(exec_prefix)/sbin
@@ -183,6 +183,8 @@ SYSTEM_LAPACK_DIR=
 #============================
 # Netlab BLAS/LAPACK OPTIONS 
 #============================
+LAPACKOSNAME	= LINUX
+
 BLAS_F77_OPTS 	+= -fno-second-underscore -O3 -c
 BLASNAME		= libf77blas.a
 BLASLOCATION	= $(libdir)/$(BLASNAME)

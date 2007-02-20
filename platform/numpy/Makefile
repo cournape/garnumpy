@@ -47,6 +47,9 @@ pre-everything:
 	echo $(LIBDEPS)
 
 configure-custom:
+	# Change default path when looking for libs to fake dir,
+	# so we can set everything by env variables
+	@cd $(WORKSRC) && echo "[DEFAULT]\\nlibrary_dirs = /fooblou" > site.cfg
 	cd $(WORKSRC) && BLAS=$(BLASLOCATION) LAPACK=$(LAPACKLOCATION) PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py config
 	@$(MAKECOOKIE)
 
