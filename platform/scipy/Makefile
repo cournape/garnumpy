@@ -43,18 +43,31 @@ include ../../gar.mk
 pre-everything:
 
 configure-custom:
-	#@cd $(WORKSRC) && for i in "$(SCIPYSANDPKG)"; do echo "$$i" >> Lib/sandbox/enabled_packages.txt; done;
+	@cd $(WORKSRC) && for i in "$(SCIPYSANDPKG)"; do echo "$$i" >> Lib/sandbox/enabled_packages.txt; done;
 	# Change default path when looking for libs to fake dir,
 	# so we can set everything by env variables
-	@cd $(WORKSRC) && echo "[DEFAULT]\\nlibrary_dirs = /fooblou" > site.cfg
-	cd $(WORKSRC) && BLAS=$(BLASLOCATION) LAPACK=$(LAPACKLOCATION) PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py config
+	. ../../blop.sh && cd $(WORKSRC) && SYSTEM_BLAS_NAME=$(SYSTEM_BLAS_NAME) && \
+	SYSTEM_BLAS_DIR=$(SYSTEM_BLAS_DIR) && \
+	SYSTEM_BLAS_NAME=$(SYSTEM_BLAS_NAME) && \
+	SYSTEM_LAPACK_DIR=$(SYSTEM_LAPACK_DIR) && \
+	SYSTEM_LAPACK_NAME=$(SYSTEM_LAPACK_NAME) && \
+	NETLIB_BLAS_DIR=$(libdir) && \
+	NETLIB_BLAS_NAME=$(NETLIB_BLAS_NAME) && \
+	NETLIB_LAPACK_DIR=$(libdir) && \
+	NETLIB_LAPACK_NAME=$(NETLIB_LAPACK_NAME) && \
+	ATLAS_BLAS_DIR=$(libdir) && \
+	ATLAS_BLAS_NAME=$(ATLAS_BLAS_NAME) && \
+	ATLAS_LAPACK_DIR=$(libdir) && \
+	ATLAS_LAPACK_NAME=$(ATLAS_LAPACK_NAME) && \
+	get_numpy_sitecfg $(BLASLAPACK) > site.cfg
+	cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py config
 	@$(MAKECOOKIE)
 
 build-custom:
-	@cd $(WORKSRC) && BLAS=$(BLASLOCATION) LAPACK=$(LAPACKLOCATION) PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py build
+	@cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py build
 	@$(MAKECOOKIE)
 
 install-custom:
-	@cd $(WORKSRC) && BLAS=$(BLASLOCATION) LAPACK=$(LAPACKLOCATION) PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py install --prefix=$(prefix)
+	@cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py install --prefix=$(prefix)
 	@$(MAKECOOKIE)
 

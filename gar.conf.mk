@@ -127,7 +127,7 @@ export GARBUILD
 export PATH LD_LIBRARY_PATH #LD_PRELOAD
 export PKG_CONFIG_PATH
 
-GARCHIVEROOT ?= /home/david/tmp/garnumpyarchives
+GARCHIVEROOT ?= /usr/media/src/src/dsp/garnumpy/garnumpyarchives
 GARCHIVEDIR = $(GARCHIVEROOT)/$(DISTNAME)
 GARPKGROOT ?= /var/www/garpkg
 GARPKGDIR = $(GARPKGROOT)/$(GARNAME)
@@ -197,6 +197,8 @@ NETLIB_LAPACK_LOCATION	= $(libdir)/$(NETLIB_LAPACK_FULL_NAME)
 #===========================================
 # ATLAS BLAS/LAPACK OPTIONS  (Don't touch)
 #===========================================
+ATLOBJDIR				= GarObj
+
 ATLAS_BLAS_FULL_NAME	= libblas.a
 ATLAS_BLAS_NAME			= fblas
 ATLAS_BLAS_SLOCATION	= $(libdir)/$(ATLAS_BLAS_NAME)

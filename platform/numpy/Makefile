@@ -20,7 +20,7 @@ endef
 
 # Dependencies are of the form categorydir/packagedir
 # LIBDEPS are for libraries, and DEPENDS are for everything else
-LIBDEPS = $(shell . ./blop.sh && get_numpy_dep $(BLASLAPACK) )
+LIBDEPS = $(shell . $(GARDIR)/blop.sh && get_numpy_dep $(BLASLAPACK) )
 DEPENDS =
 # Builddeps are installed in the build DESTIMG
 BUILDDEPS =
@@ -64,7 +64,7 @@ include ../../gar.mk
 configure-custom:
 	# Change default path when looking for libs to fake dir,
 	# so we can set everything by env variables
-	. ./blop.sh && cd $(WORKSRC) && SYSTEM_BLAS_NAME=$(SYSTEM_BLAS_NAME) && \
+	. ../../blop.sh && cd $(WORKSRC) && SYSTEM_BLAS_NAME=$(SYSTEM_BLAS_NAME) && \
 	SYSTEM_BLAS_DIR=$(SYSTEM_BLAS_DIR) && \
 	SYSTEM_BLAS_NAME=$(SYSTEM_BLAS_NAME) && \
 	SYSTEM_LAPACK_DIR=$(SYSTEM_LAPACK_DIR) && \

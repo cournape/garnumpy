@@ -1,5 +1,7 @@
 GARNAME = lapack
-GARVERSION = 3.1.0
+# 3.1.0 seems to cause some test to fail with scipy 0.5.2
+#GARVERSION = 3.1.0
+GARVERSION = 3.0
 CATEGORIES = 
 
 MASTER_SITES = http://www.netlib.org/lapack/
@@ -17,6 +19,9 @@ endef
 
 # Dependencies are of the form categorydir/packagedir
 # LIBDEPS are for libraries, and DEPENDS are for everything else
+#
+# lapack does not depend on blas strico sensu, but testing lapack depends on blas. 
+# Building blas is quick anyway, and the tarball small.
 LIBDEPS = bootstrap/blas
 DEPENDS =
 # Builddeps are installed in the build DESTIMG
@@ -37,14 +42,20 @@ INSTALL_OVERRIDE_DIRS =
 # This should go before any hand-made rules.
 include ../../gar.mk
 
+# This is only for 3.0 (not 3.1.0): lapack extracts itself into LAPACK
+post-extract:
+	@echo " ===> moving files to $(WORKSRC)"
+	@mv $(EXTRACTDIR)/LAPACK $(WORKSRC)
+	@$(MAKECOOKIE)
+
 configure-custom:
-	cd $(WORKSRC) && cp INSTALL/make.inc.$(LAPACKOSNAME) make.inc
+	@cd $(WORKSRC) && cp INSTALL/make.inc.$(LAPACKOSNAME) make.inc
 
 build-custom:
 	# default target include test, it seems
-	cd $(WORKSRC) &&  $(MAKE) FORTRAN=$(F77) LOADER=$(F77) BLASLIB="$(libdir)/$(NETLIB_BLAS_FULL_NAME)" LAPACKLIB=$(NETLIB_LAPACK_FULL_NAME)
+	@cd $(WORKSRC) &&  $(MAKE) FORTRAN=$(F77) LOADER=$(F77) BLASLIB="$(libdir)/$(NETLIB_BLAS_FULL_NAME)" LAPACKLIB=$(NETLIB_LAPACK_FULL_NAME) lapacklib
 	@$(MAKECOOKIE)
 
 install-custom:
-	cd $(WORKSRC) && install -c $(NETLIB_LAPACK_FULL_NAME) $(libdir)
+	@cd $(WORKSRC) && install -c $(NETLIB_LAPACK_FULL_NAME) $(libdir)
 	@$(MAKECOOKIE)
