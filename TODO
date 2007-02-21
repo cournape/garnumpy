@@ -2,6 +2,8 @@ Last Change: Tue Feb 20 06:00 PM 2007 J
     - fetch from SVN instead of release as option
     - test target
     - sync env values in startgarnumpy and in gar.conf.mk
+    - better handling of compiler specific stuff (fortan and C)
+    (clean up the whole main_CC vs CC vs ... mess)
 
 Values to modifify:
     - python version in startnumpy.sh
