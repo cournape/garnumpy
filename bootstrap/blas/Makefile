@@ -5,7 +5,7 @@ CATEGORIES =
 MASTER_SITES = http://www.netlib.org/blas/
 
 DISTFILES = $(GARNAME).tgz
-PATCHFILES = 
+PATCHFILES = gar-blas-makefile.diff
 MAINTAINER = David Cournapeau <david@ar.media.kyoto-u.ac.jp>
 # GPL, GPL2, BSD, MIT, etc. Or add the URL to any custom license
 LICENSE = 
@@ -52,9 +52,9 @@ post-extract:
 
 build-custom:
 	# build objects
-	@cd $(WORKSRC) && $(F77) $(NETLIB_BLAS_F77_OPTS) *.f
+	#cd $(WORKSRC) && $(MAKE) obj
 	# build static lib from it
-	@cd $(WORKSRC) && $(AR) -r $(NETLIB_BLAS_FULL_NAME) *.o && $(RANLIB) $(NETLIB_BLAS_FULL_NAME)
+	cd $(WORKSRC) && $(MAKE) FORTRAN=$(F77) F77FLAGS=$(NETLIB_BLAS_F77_OPTS) AR=$(AR) RANLIB=$(RANLIB) LIBNAME=$(NETLIB_BLAS_FULL_NAME) lib
 	@$(MAKECOOKIE)
 
 install-custom:

@@ -26,7 +26,7 @@ ALL_DESTIMGS = main build rootbin lnximg singularity
 # /usr/etc or /usr/var
 
 # Directory config for the "main" image
-main_prefix ?= /media/untitled/src/dsp/local
+main_prefix ?= /home/david/tmp/garnumpy/garnumpyinstall
 main_exec_prefix = $(prefix)
 main_bindir = $(exec_prefix)/bin
 main_sbindir = $(exec_prefix)/sbin
@@ -79,7 +79,7 @@ build_LDFLAGS += -L$(DESTDIR)$(libdir)
 #main_CC ?= $(GARHOST)-gcc
 main_CC ?= gcc
 main_CXX ?= g++
-main_F77 ?= g77
+main_F77 ?= gfortran
 #main_LD ?= $(GARHOST)-ld
 main_LD ?= ld
 build_CC ?= gcc
@@ -127,7 +127,7 @@ export GARBUILD
 export PATH LD_LIBRARY_PATH #LD_PRELOAD
 export PKG_CONFIG_PATH
 
-GARCHIVEROOT ?= /media/untitled/src/dsp/garnumpyarchives
+GARCHIVEROOT ?= /home/david/tmp/garnumpy/garnumpyarchives
 GARCHIVEDIR = $(GARCHIVEROOT)/$(DISTNAME)
 GARPKGROOT ?= /var/www/garpkg
 GARPKGDIR = $(GARPKGROOT)/$(GARNAME)
@@ -179,17 +179,19 @@ SYSTEM_BLAS_DIR=
 SYSTEM_LAPACK_NAME=
 SYSTEM_LAPACK_DIR=
 
-
+# If -fno-f2c is used anywhere, used it EVERYWHERE !!!!!
+F77_COMMON	= "-fno-f2c -O3 -funroll-all-loops -c"
 #===========================================
 # Netlab BLAS/LAPACK OPTIONS  (Don't touch)
 #===========================================
 LAPACKOSNAME	= LINUX
 
-NETLIB_BLAS_F77_OPTS 	+= -fno-second-underscore -O3 -c
+NETLIB_BLAS_F77_OPTS 	= $(F77_COMMON) 
 NETLIB_BLAS_FULL_NAME	= libblas.a
 NETLIB_BLAS_NAME		= blas
 NETLIB_BLAS_LOCATION	= $(libdir)/$(NETLIB_BLAS_FULL_NAME)
 
+NETLIB_LAPACK_F77_OPTS 	= $(F77_COMMON)
 NETLIB_LAPACK_FULL_NAME	= liblapack.a
 NETLIB_LAPACK_NAME		= lapack
 NETLIB_LAPACK_LOCATION	= $(libdir)/$(NETLIB_LAPACK_FULL_NAME)
