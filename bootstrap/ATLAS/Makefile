@@ -5,7 +5,7 @@ CATEGORIES =
 MASTER_SITES = http://kent.dl.sourceforge.net/math-atlas/
 
 DISTFILES = $(GARNAME)$(GARVERSION).tar.bz2
-PATCHFILES = garnumpy-config.diff
+PATCHFILES = garnumpy-config.diff gar-ppc-fix.diff
 MAINTAINER = David Cournapeau <david@ar.media.kyoto-u.ac.jp>
 # GPL, GPL2, BSD, MIT, etc. Or add the URL to any custom license
 LICENSE = 
@@ -17,7 +17,7 @@ endef
 
 # Dependencies are of the form categorydir/packagedir
 # LIBDEPS are for libraries, and DEPENDS are for everything else
-LIBDEPS = #bootstrap/lapack
+LIBDEPS = bootstrap/lapack
 DEPENDS =
 # Builddeps are installed in the build DESTIMG
 BUILDDEPS =

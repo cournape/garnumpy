@@ -1,0 +1,12 @@
+diff -Npru atlas-3.7.28.orig/include/atlas_prefetch.h atlas-3.7.28/include/atlas_prefetch.h
+--- atlas-3.7.28.orig/include/atlas_prefetch.h	2007-02-21 00:44:06.000000000 +0900
++++ atlas-3.7.28/include/atlas_prefetch.h	2007-02-21 00:44:47.000000000 +0900
+@@ -128,7 +128,7 @@
+       #define ATL_pfl1W(mem) ATL_pfavW(mem, 33619968, 2)
+       #define ATL_GOT_L1PREFETCH
+    #endif
+-#elif defined(defined(__GNUC__))  /* last ditch, use gcc predefined func */
++#elif defined(__GNUC__)  /* last ditch, use gcc predefined func */
+    #define ATL_pfl1R(mem) __builtin_prefetch(mem, 0, 3)
+    #define ATL_pfl1W(mem) __builtin_prefetch(mem, 1, 3)
+    #define ATL_GOT_L1PREFETCH
