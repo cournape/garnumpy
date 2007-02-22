@@ -50,7 +50,7 @@ configure-custom:
 	@echo "======================================="
 	@echo "		CONFIGURING ATLAS"
 	@echo "======================================="
-	@cd $(WORKSRC)/$(ATLOBJDIR) && ../configure 
+	@cd $(WORKSRC)/$(ATLOBJDIR) && ../configure -Ss flapack $(libdir)/$(NETLIB_LAPACK_FULL_NAME) 
 	@echo "======================================="
 	@echo "		CONFIGURING ATLAS DONE	"
 	@echo "======================================="

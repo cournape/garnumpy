@@ -79,7 +79,7 @@ build_LDFLAGS += -L$(DESTDIR)$(libdir)
 #main_CC ?= $(GARHOST)-gcc
 main_CC ?= gcc
 main_CXX ?= g++
-main_F77 ?= gfortran
+main_F77 ?= g77
 #main_LD ?= $(GARHOST)-ld
 main_LD ?= ld
 build_CC ?= gcc
@@ -180,7 +180,8 @@ SYSTEM_LAPACK_NAME=
 SYSTEM_LAPACK_DIR=
 
 # If -fno-f2c is used anywhere, used it EVERYWHERE !!!!!
-F77_COMMON	= "-fno-f2c -O3 -funroll-all-loops -c"
+#F77_COMMON	= "-fno-f2c -O3 -funroll-all-loops -c"
+F77_COMMON	= "-O3 -funroll-all-loops -c"
 #===========================================
 # Netlab BLAS/LAPACK OPTIONS  (Don't touch)
 #===========================================
