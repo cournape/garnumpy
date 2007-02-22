@@ -1,9 +1,12 @@
-Last Change: Tue Feb 20 06:00 PM 2007 J
+Last Change: Thu Feb 22 08:00 PM 2007 J
     - fetch from SVN instead of release as option
     - test target
     - sync env values in startgarnumpy and in gar.conf.mk
-    - better handling of compiler specific stuff (fortan and C)
-    (clean up the whole main_CC vs CC vs ... mess)
+    - better handling of compiler specific stuff (fortan and C) (clean up the
+      whole main_CC vs CC vs ... mess)
+    - -fno-f2c ? Use it or not with g77 ?
+    - having a serie of sensible default for compilers. For example, one set
+      for gcc/g77, one for ICC, etc...)
 
 Values to modifify:
     - python version in startnumpy.sh
@@ -19,3 +22,9 @@ For ubuntu (edgy at least):
         - atlas3-base-dev
     - mpl:
         - python-gtk2-dev
+
+Important points:
+    - by default, build blas/lapack
+    - check fortran compiler options by
+    - do NOT use make -j N (should have some variable somewhere 
+      to speed up compilation when it is safe, though)

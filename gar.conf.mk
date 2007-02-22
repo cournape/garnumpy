@@ -182,6 +182,15 @@ SYSTEM_LAPACK_DIR=
 # If -fno-f2c is used anywhere, used it EVERYWHERE !!!!!
 #F77_COMMON	= "-fno-f2c -O3 -funroll-all-loops -c"
 F77_COMMON	= "-O3 -funroll-all-loops -c"
+
+# Set to 0 to skip lapack testing
+TEST_NETLIB_LAPACK=1
+# Set to 1 to try using gcc3 instead of current gcc for kernels
+# (may produce much more efficient code on some architecture, you 
+# should look at ATLAS webpage for more details
+ATLAS_USE_GCC3	= 0
+GCC3_PATH		= /usr/bin/gcc-3.3
+
 #===========================================
 # Netlab BLAS/LAPACK OPTIONS  (Don't touch)
 #===========================================

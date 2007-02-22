@@ -54,9 +54,18 @@ configure-custom:
 build-custom:
 	# default target include test, it seems
 	@cd $(WORKSRC) &&  $(MAKE) FORTRAN=$(F77) LOADER=$(F77) BLASLIB="$(libdir)/$(NETLIB_BLAS_FULL_NAME)" LAPACKLIB=$(NETLIB_LAPACK_FULL_NAME) OPTS=$(NETLIB_LAPACK_F77_OPTS) lib
-	@cd $(WORKSRC) &&  $(MAKE) FORTRAN=$(F77) LOADER=$(F77) BLASLIB="$(libdir)/$(NETLIB_BLAS_FULL_NAME)" LAPACKLIB=$(NETLIB_LAPACK_FULL_NAME) OPTS=$(NETLIB_LAPACK_F77_OPTS) testing
+	# test ?
 	@$(MAKECOOKIE)
+
+post-build:
+	# For testing compiled lapack
+	@if [ $(TEST_NETLIB_LAPACK) -eq 1 ]; then \
+		cd $(WORKSRC);\
+		$(MAKE) FORTRAN=$(F77) LOADER=$(F77) BLASLIB="$(libdir)/$(NETLIB_BLAS_FULL_NAME)" LAPACKLIB=$(NETLIB_LAPACK_FULL_NAME) OPTS=$(NETLIB_LAPACK_F77_OPTS) testing; \
+	fi;
 
 install-custom:
 	@cd $(WORKSRC) && install -c $(NETLIB_LAPACK_FULL_NAME) $(libdir)
-	@$(MAKECOOKIE)
+	#@$(MAKECOOKIE)
+
+#@cd $(WORKSRC) &&  $(MAKE) FORTRAN=$(F77) LOADER=$(F77) BLASLIB="$(libdir)/$(NETLIB_BLAS_FULL_NAME)" LAPACKLIB=$(NETLIB_LAPACK_FULL_NAME) OPTS=$(NETLIB_LAPACK_F77_OPTS) testing
