@@ -35,7 +35,7 @@ get_numpy_dep()
             return 0
             ;;
         "atlas")
-            echo "bootstrap/atlas"
+            echo "bootstrap/ATLAS"
             return 0
             ;;
         "netlib")
@@ -65,12 +65,8 @@ get_numpy_sitecfg()
         "atlas")
             # Fake default to force our values
             echo "[DEFAULT]\\nlibrary_dirs = /fooblou"
-            echo "[blas]"
-            echo "library_dirs=$ATLAS_BLAS_DIR"
-            echo "libraries=$ATLAS_BLAS_NAME"
-            echo "[lapack]"
-            echo "library_dirs=$ATLAS_LAPACK_DIR"
-            echo "libraries=$ATLAS_LAPACK_NAME"
+            echo "[atlas]"
+            echo "library_dirs=$ATLASLIBDIR"
             return 0
             ;;
         "netlib")

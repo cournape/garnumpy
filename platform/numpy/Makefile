@@ -2,11 +2,11 @@ GARNAME = numpy
 GARVERSION = 1.0.1
 CATEGORIES = 
 
-MASTER_SITES = http://kent.dl.sourceforge.net/numpy/
+MASTER_SITES = $(SOURCERFORGEDL)/numpy
 
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = 
-MAINTAINER = David Cournapeau <david@ar.media.kyoto-u.ac.jp>
+MAINTAINER = 
 # GPL, GPL2, BSD, MIT, etc. Or add the URL to any custom license
 LICENSE = BSD
 
@@ -73,10 +73,7 @@ configure-custom:
 	NETLIB_BLAS_NAME=$(NETLIB_BLAS_NAME) && \
 	NETLIB_LAPACK_DIR=$(libdir) && \
 	NETLIB_LAPACK_NAME=$(NETLIB_LAPACK_NAME) && \
-	ATLAS_BLAS_DIR=$(libdir) && \
-	ATLAS_BLAS_NAME=$(ATLAS_BLAS_NAME) && \
-	ATLAS_LAPACK_DIR=$(libdir) && \
-	ATLAS_LAPACK_NAME=$(ATLAS_LAPACK_NAME) && \
+	ATLASLIBDIR=$(ATLASLIBDIR) && \
 	get_numpy_sitecfg $(BLASLAPACK) > site.cfg
 	cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py config
 	@$(MAKECOOKIE)

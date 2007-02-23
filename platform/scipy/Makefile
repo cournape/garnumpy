@@ -2,11 +2,11 @@ GARNAME = scipy
 GARVERSION = 0.5.2
 CATEGORIES = 
 
-MASTER_SITES = http://kent.dl.sourceforge.net/scipy/
+MASTER_SITES = $(SOURCERFORGEDL)/scipy
 
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = 
-MAINTAINER = David Cournapeau <david@ar.media.kyoto-u.ac.jp>
+MAINTAINER = 
 # GPL, GPL2, BSD, MIT, etc. Or add the URL to any custom license
 LICENSE = BSD
 
@@ -43,10 +43,19 @@ include ../../gar.mk
 pre-everything:
 
 configure-custom:
-	@cd $(WORKSRC) && for i in "$(SCIPYSANDPKG)"; do echo "$$i" >> Lib/sandbox/enabled_packages.txt; done;
+	# If enabled_packages.txt is not empty but with no packages,
+	# distutils goes into infinite recursion, so we take care
+	# not to create the file if no sandbox pkgs are chosen
+	@cd $(WORKSRC) ; \
+	if [ -n "$(SCIPYSANDPKG)" ]; then\
+		for i in $(SCIPYSANDPKG); do\
+			echo "==== Adding sandboxed package $$i   ======";\
+			echo $$i >> Lib/sandbox/enabled_packages.txt;\
+		done;\
+	fi;
 	# Change default path when looking for libs to fake dir,
 	# so we can set everything by env variables
-	. ../../blop.sh && cd $(WORKSRC) && SYSTEM_BLAS_NAME=$(SYSTEM_BLAS_NAME) && \
+	@. ../../blop.sh && cd $(WORKSRC) && SYSTEM_BLAS_NAME=$(SYSTEM_BLAS_NAME) && \
 	SYSTEM_BLAS_DIR=$(SYSTEM_BLAS_DIR) && \
 	SYSTEM_BLAS_NAME=$(SYSTEM_BLAS_NAME) && \
 	SYSTEM_LAPACK_DIR=$(SYSTEM_LAPACK_DIR) && \
@@ -55,12 +64,9 @@ configure-custom:
 	NETLIB_BLAS_NAME=$(NETLIB_BLAS_NAME) && \
 	NETLIB_LAPACK_DIR=$(libdir) && \
 	NETLIB_LAPACK_NAME=$(NETLIB_LAPACK_NAME) && \
-	ATLAS_BLAS_DIR=$(libdir) && \
-	ATLAS_BLAS_NAME=$(ATLAS_BLAS_NAME) && \
-	ATLAS_LAPACK_DIR=$(libdir) && \
-	ATLAS_LAPACK_NAME=$(ATLAS_LAPACK_NAME) && \
+	ATLASLIBDIR=$(ATLASLIBDIR) && \
 	get_numpy_sitecfg $(BLASLAPACK) > site.cfg
-	cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py config
+	@cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py config
 	@$(MAKECOOKIE)
 
 build-custom:

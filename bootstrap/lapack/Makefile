@@ -53,8 +53,8 @@ configure-custom:
 
 build-custom:
 	# default target include test, it seems
+	# Using PMAKE with lib target does NOT work. Dunno if it is fixable
 	@cd $(WORKSRC) &&  $(MAKE) FORTRAN=$(F77) LOADER=$(F77) BLASLIB="$(libdir)/$(NETLIB_BLAS_FULL_NAME)" LAPACKLIB=$(NETLIB_LAPACK_FULL_NAME) OPTS=$(NETLIB_LAPACK_F77_OPTS) lib
-	# test ?
 	@$(MAKECOOKIE)
 
 post-build:

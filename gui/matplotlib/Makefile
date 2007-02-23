@@ -2,13 +2,13 @@ GARNAME = matplotlib
 GARVERSION = 0.90.0
 CATEGORIES = 
 
-MASTER_SITES = http://kent.dl.sourceforge.net/matplotlib/
+MASTER_SITES = $(SOURCEFORGEDL)/matplotlib/
 
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = 
-MAINTAINER = David Cournapeau <david@ar.media.kyoto-u.ac.jp>
+MAINTAINER = 
 # GPL, GPL2, BSD, MIT, etc. Or add the URL to any custom license
-LICENSE = BSD
+LICENSE = 
 
 DESCRIPTION = 
 define BLURB

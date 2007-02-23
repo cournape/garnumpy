@@ -2,7 +2,7 @@ GARNAME = atlas
 GARVERSION = 3.7.28
 CATEGORIES = 
 
-MASTER_SITES = http://kent.dl.sourceforge.net/math-atlas/
+MASTER_SITES += $(SOURCEFORGEDL)/math-atlas
 
 DISTFILES = $(GARNAME)$(GARVERSION).tar.bz2
 PATCHFILES = garnumpy-config.diff gar-ppc-fix.diff
@@ -44,21 +44,26 @@ post-extract:
 	@echo " ===> moving files to $(WORKSRC)"
 	@mv $(EXTRACTDIR)/ATLAS $(WORKSRC)
 	@mkdir -p $(WORKSRC)/$(ATLOBJDIR)
+	@cp $(FILEDIR)/P432SSE2.tgz $(WORKSRC)/CONFIG/ARCHS/
 	@$(MAKECOOKIE)
 
 configure-custom:
 	@echo "======================================="
 	@echo "		CONFIGURING ATLAS"
 	@echo "======================================="
-	@cd $(WORKSRC)/$(ATLOBJDIR) && ../configure -Ss flapack $(libdir)/$(NETLIB_LAPACK_FULL_NAME) 
+	@cd $(WORKSRC)/$(ATLOBJDIR) && ../configure -Si archdef 1\
+		--with-netlib-lapack=$(libdir)/$(NETLIB_LAPACK_FULL_NAME) \
+		--prefix=$(ATLASPREFIX) \
+		-C if $(F77)
 	@echo "======================================="
 	@echo "		CONFIGURING ATLAS DONE	"
 	@echo "======================================="
 	@$(MAKECOOKIE)
 
 build-custom:
-	@cd $(WORKSRC)/$(ATLOBJDIR) && make
+	@cd $(WORKSRC)/$(ATLOBJDIR) && make build
 	@$(MAKECOOKIE)
 
-#install-custom:
-#	@cd $(WORKSRC) && install -c $(NETLIB_BLAS_FULL_NAME) $(libdir)
+install-custom:
+	@cd $(WORKSRC)/$(ATLOBJDIR) && make install
+	@$(MAKECOOKIE)

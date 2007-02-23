@@ -1,10 +1,11 @@
-Last Change: Thu Feb 22 08:00 PM 2007 J
+Last Change: Fri Feb 23 05:00 PM 2007 J
     - fetch from SVN instead of release as option
     - test target
     - sync env values in startgarnumpy and in gar.conf.mk
     - better handling of compiler specific stuff (fortan and C) (clean up the
       whole main_CC vs CC vs ... mess)
-    - -fno-f2c ? Use it or not with g77 ?
+    - -fno-f2c ? Use it or not with g77 ? For Atlas, set the fortran compiler
+      to same value than NETLIB
     - having a serie of sensible default for compilers. For example, one set
       for gcc/g77, one for ICC, etc...)
 

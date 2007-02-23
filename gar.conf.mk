@@ -135,9 +135,9 @@ GARPKGDIR = $(GARPKGROOT)/$(GARNAME)
 # prepend the local file listing
 FILE_SITES = file://$(FILEDIR)/ file://$(GARCHIVEDIR)/
 
-##append the public archive
-#MASTER_SITES += http://www.lnx-bbc.org/garchive/$(DISTNAME)/ http://garchive.movealong.org/$(DISTNAME)/ http://build.lnx-bbc.org/garchive/$(DISTNAME)/
-#
+SOURCEFORGEDL	= http://downloads.sourceforge.net/
+#MASTER_SITES 	+= $(SOURCEFORGEDL)
+
 ## Extra configuration for the lnx-bbc build
 #GAR_EXTRA_CONF += devel/gcc/package-api.mk
 #GAR_EXTRA_CONF += meta/singularity/singularity.conf.mk
@@ -147,18 +147,17 @@ FILE_SITES = file://$(FILEDIR)/ file://$(GARCHIVEDIR)/
 ## Extra libs to include with gar.mk
 #GAR_EXTRA_LIBS += bbc.lib.mk
 
-#=======================
-# Python related option
-#=======================
-# If you want to use a different version of python everywhere
-# change this
-PYTHON = $(shell which python)
-PYVER = $(shell $(PYTHON) -c "import sys; print sys.version[:3]")
-PYTHONPATH=$(main_libdir)/python$(PYVER)/site-packages:$(main_libdir)/python$(PYVER)/site-packages/gtk-2.0
+#===================================================
+# General compilation options (you can tweak those)
+#===================================================
+# Use for parrallel builds; you should NOT use make -j N directly from the
+# cmdline, as many libraries have broken makefile wrt this feature, and/or
+# some libraries test need single job.
+PMAKE	= $(MAKE) -j 4
 
-#======================
+#----------------------
 # General BLAS/LAPACK 
-#======================
+#----------------------
 # numpy/scipy needs blas and lapack libraries for fast linear algebra computation.
 # Here, set your libraries for blas and lapack. 
 
@@ -179,17 +178,54 @@ SYSTEM_BLAS_DIR=
 SYSTEM_LAPACK_NAME=
 SYSTEM_LAPACK_DIR=
 
-# If -fno-f2c is used anywhere, used it EVERYWHERE !!!!!
+# If -fno-f2c is used anywhere, use it EVERYWHERE !!!!!
 #F77_COMMON	= "-fno-f2c -O3 -funroll-all-loops -c"
 F77_COMMON	= "-O3 -funroll-all-loops -c"
 
-# Set to 0 to skip lapack testing
-TEST_NETLIB_LAPACK=1
+# Set to 0 to skip lapack testing, 1 for testing (take time, but strongly
+# advised if you intend to use this for production purpose)
+TEST_NETLIB_LAPACK=0
+
 # Set to 1 to try using gcc3 instead of current gcc for kernels
 # (may produce much more efficient code on some architecture, you 
-# should look at ATLAS webpage for more details
+# should look at ATLAS webpage for more details)
 ATLAS_USE_GCC3	= 0
 GCC3_PATH		= /usr/bin/gcc-3.3
+
+
+#-----------------------
+# Python related option
+#-----------------------
+# If you want to use a different version of python everywhere
+# change this
+PYTHON = $(shell which python)
+PYVER = $(shell $(PYTHON) -c "import sys; print sys.version[:3]")
+PYTHONPATH=$(main_libdir)/python$(PYVER)/site-packages:$(main_libdir)/python$(PYVER)/site-packages/gtk-2.0
+
+#----------------------
+# SCIPY related options
+#----------------------
+# space separated list of package in scipy sandbox to add
+SCIPYSANDPKG = pyem svm
+SCIPYSANDPKG = 
+
+#------------
+# GNU TOOLS
+#------------
+# GARNUMPY uses the GNU tool chain. On some systems the GNU tools may have
+# different names and may be located in non-standard places.
+# If so, change these accordingly.
+AWK = awk
+FIND = find
+GREP = grep
+GPG = gpg
+GZIP = gzip
+MAKE = make
+MD5 = md5sum
+SED = sed
+TAR = tar
+# If not ranlib available on yout system, setting it /bin/true should be OK
+RANLIB=ranlib
 
 #===========================================
 # Netlab BLAS/LAPACK OPTIONS  (Don't touch)
@@ -210,6 +246,8 @@ NETLIB_LAPACK_LOCATION	= $(libdir)/$(NETLIB_LAPACK_FULL_NAME)
 # ATLAS BLAS/LAPACK OPTIONS  (Don't touch)
 #===========================================
 ATLOBJDIR				= GarObj
+ATLASPREFIX				= $(prefix)/atlas
+ATLASLIBDIR				= $(prefix)/atlas/lib
 
 ATLAS_BLAS_FULL_NAME	= libblas.a
 ATLAS_BLAS_NAME			= fblas
@@ -218,29 +256,3 @@ ATLAS_BLAS_SLOCATION	= $(libdir)/$(ATLAS_BLAS_NAME)
 ATLAS_LAPACK_FULL_NAME	= liblapack.a
 ATLAS_LAPACK_NAME		= lapack
 ATLAS_LAPACK_LOCATION	= $(libdir)/$(ATLAS_LAPACK_NAME)
-
-#======================
-# SCIPY related options
-#======================
-# space separated list of package in scipy sandbox to add
-#SCIPYSANDPKG = "pyem svm"
-SCIPYSANDPKG = 
-
-#============
-# GNU TOOLS
-#============
-# GARNOME uses the GNU tool chain. On some systems the GNU tools may have
-# different names and may be located in non-standard places.
-# If so, change these accordingly.
-AWK = awk
-FIND = find
-GREP = grep
-GPG = gpg
-GZIP = gzip
-MAKE = make
-MD5 = md5sum
-SED = sed
-TAR = tar
-# Fake ranlib
-RANLIB=echo
-
