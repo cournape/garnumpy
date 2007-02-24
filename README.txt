@@ -23,11 +23,19 @@ How to use ?
     
     will install numpy, scipy and all the dependencies (by default, it will
     build fftw3, and NETLIB BLAS/LAPACK), if you have a "standard" GNU userland.
+    Then, in a shell:
+        
+        source startgarnumpy.sh
 
-    Longer story: before the above, you should:
+    will set the necessary env variables to use scipy in the current shell.
+
+    Longer story: 
+
+    before the above, you should:
         - set main_prefix and GARCHIVEROOT in gar.conf.mk to some values
         - make garchive will download all the sources in one step (useful if
           you plan on trying different build options)
+        - if you change main_prefix, you should change accordingly startgarnumpy.sh
 
     Other variable to adjust in gar.conf.mk:
         - CC, F77 and CXX: C, Fortran and C++ compilers
@@ -36,6 +44,8 @@ How to use ?
           installed BLAS/LAPACK) are also supported.
         - SCIPYSANDPKG: a list of packages in scipy sandbox to install
         - TESTNELIB: set to 1 to test the compiled NETLIB LAPACK library
+        - SOURCEFORGEDL: set to a proper sourceforge mirror (redirection
+          often fail).
 
 Supported softwares:
     - numpy and scipy (in platform)

@@ -27,6 +27,7 @@ ALL_DESTIMGS = main build rootbin lnximg singularity
 
 # Directory config for the "main" image
 main_prefix ?= /usr/media/src/src/dsp/garnumpy/garnumpyinstall
+#main_prefix ?= $(HOME)/garnumpyinstall
 main_exec_prefix = $(prefix)
 main_bindir = $(exec_prefix)/bin
 main_sbindir = $(exec_prefix)/sbin
@@ -139,6 +140,7 @@ export PATH LD_LIBRARY_PATH #LD_PRELOAD
 export PKG_CONFIG_PATH
 
 GARCHIVEROOT ?= /usr/media/src/src/dsp/garnumpy/garnumpyarchives
+#GARCHIVEROOT ?= $(HOME)/garnumpyarchives
 GARCHIVEDIR = $(GARCHIVEROOT)/$(DISTNAME)
 GARPKGROOT ?= /var/www/garpkg
 GARPKGDIR = $(GARPKGROOT)/$(GARNAME)

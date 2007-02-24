@@ -1,7 +1,9 @@
 #!/bin/sh
 
-PYTHONPATH=/usr/media/src/src/dsp/garnumpy/garnumpyinstall/lib/python2.4/site-packages:$PYTHONPATH
-export PYTHONPATH
+GARNUMPYDIR=/usr/media/src/src/dsp/garnumpy/garnumpyinstall
 
-PATH=/usr/media/src/src/dsp/garnumpy/garnumpyinstall/bin:$PATH
+PYTHONPATH=$GARNUMPYDIR/lib/python2.4/site-packages:$PYTHONPATH
+PATH=$GARNUMPYDIR/bin:$PATH
+
+export PYTHONPATH
 export PATH
