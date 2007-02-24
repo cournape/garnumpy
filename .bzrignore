@@ -16,3 +16,12 @@ platform/numpy/work
 platform/scipy/cookies
 platform/scipy/download
 platform/scipy/work
+bootstrap/AMD/cookies
+bootstrap/AMD/download
+bootstrap/AMD/work
+bootstrap/UFconfig/cookies
+bootstrap/UFconfig/download
+bootstrap/UFconfig/work
+bootstrap/umfpack/cookies
+bootstrap/umfpack/download
+bootstrap/umfpack/work

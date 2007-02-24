@@ -96,14 +96,14 @@ F77 = gfortran
 #LD	?= ld
 
 # If we use gfortran, we need the following library flags for linking
-LDFLAGS	+= "-lgfortran -lm -lgfortranbegin"
+LDFLAGS	+= -lgfortran -lm -lgfortranbegin
 
 # If -fno-f2c is used anywhere, use it EVERYWHERE !!!!!
-#F77_COMMON	= "-fno-f2c -O3 -funroll-all-loops -c"
-F77_COMMON	= "-O3 -funroll-all-loops -c"
+#F77_COMMON	= "-fno-f2c -O3 -funroll-all-loops "
+F77_COMMON	= -O3 -funroll-all-loops 
 FFLAGS	+= $(F77_COMMON)
 # Some C compilers need special library when using fortran libs
-C_FORTRAN_LIB = "g2c"
+C_FORTRAN_LIB = g2c
 
 ## GARCH and GARHOST for main.  Override these for cross-compilation
 ##main_GARCH ?= i386
@@ -253,12 +253,14 @@ NETLIB_BLAS_FULL_NAME	= libblas.a
 NETLIB_BLAS_NAME		= blas
 NETLIB_BLAS_DIR			= $(libdir)
 NETLIB_BLAS_LOCATION	= $(libdir)/$(NETLIB_BLAS_FULL_NAME)
+NETLIB_BLAS_CC_LINK		= -L$(libdir) -lblas
 
 NETLIB_LAPACK_F77_OPTS 	= $(F77_COMMON)
 NETLIB_LAPACK_FULL_NAME	= liblapack.a
 NETLIB_LAPACK_NAME		= lapack
 NETLIB_LAPACK_DIR		= $(libdir)
 NETLIB_LAPACK_LOCATION	= $(libdir)/$(NETLIB_LAPACK_FULL_NAME)
+NETLIB_LAPACK_CC_LINK	= -L$(libdir) -llapack
 
 #===========================================
 # ATLAS BLAS/LAPACK OPTIONS  (Don't touch)
@@ -270,10 +272,13 @@ ATLASLIBDIR				= $(prefix)/atlas/lib
 ATLAS_BLAS_FULL_NAME	= libblas.a
 ATLAS_BLAS_NAME			= blas
 ATLAS_BLAS_SLOCATION	= $(libdir)/$(ATLAS_BLAS_NAME)
+ATLAS_BLAS_F77_LINK		= -L$(ATLASLIBDIR) -lf77blas -latlas
+ATLAS_BLAS_CC_LINK		= -L$(ATLASLIBDIR) -lcblas -latlas
 
 ATLAS_LAPACK_FULL_NAME	= liblapack.a
 ATLAS_LAPACK_NAME		= lapack
 ATLAS_LAPACK_LOCATION	= $(libdir)/$(ATLAS_LAPACK_NAME)
+ATLAS_LAPACK_F77_LINK	= -L$(ATLASLIBDIR) -llapack -lf77blas -latlas 
 
 #===============================================
 # FINAL BLAS/LAPACK related values (don't touch)
@@ -290,12 +295,17 @@ else
 		BLAS_DIR	= $(ATLASLIBDIR)
 		LAPACK_NAME	= $(ATLAS_LAPACK_NAME)
 		LAPACK_DIR	= $(ATLASLIBDIR)
+		BLAS_F77_LINK	= $(ATLAS_BLAS_F77_LINK)
+		LAPACK_F77_LINK	= $(ATLAS_LAPACK_F77_LINK)
+		BLAS_CC_LINK	= $(ATLAS_BLAS_CC_LINK)
 	else 
 		ifeq ($(BLASLAPACK), netlib)
 			BLAS_NAME	= $(NETLIB_BLAS_NAME)
 			BLAS_DIR	= $(NETLIB_BLAS_DIR)
 			LAPACK_NAME	= $(NETLIB_LAPACK_NAME)
 			LAPACK_DIR	= $(NETLIB_LAPACK_DIR)
+			BLAS_F77_LINK	= $(NETLIB_BLAS_F77_LINK)
+			LAPACK_F77_LINK	= $(NETLIB_LAPACK_F77_LINK)
 		endif
 	endif
 endif
@@ -309,6 +319,8 @@ UMFPACK_INCDIR	= $(includedir)/umfpack
 
 AMD_NAME	= amd
 AMD_DIR		= $(libdir)
+
+AMD_F77FLAGS	+= $(F77_COMMON)
 
 #===========================================
 # FFTW3 OPTIONS  (Don't touch)

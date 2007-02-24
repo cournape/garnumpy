@@ -52,8 +52,10 @@ pre-configure:
 	@$(MAKECOOKIE)
 
 build-custom:
-	@cd $(WORKSRC) && $(MAKE) CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) F77=$(F77) F77FLAGS=$(AMD_F77FLAGS) BLAS="-L$(BLAS_DIR) -l$(BLAS_NAME) -l$(C_FORTRAN_LIB)" library
-	@cd $(WORKSRC) && $(MAKE) CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) F77=$(F77) F77FLAGS=$(AMD_F77FLAGS) BLAS="-L$(BLAS_DIR) -l$(BLAS_NAME) " fortran
+	@cd $(WORKSRC) && $(MAKE) LIB="$(LDFLAGS)" CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) \
+		F77=$(F77) F77FLAGS="$(AMD_F77FLAGS)" BLAS="$(BLAS_F77_LINK) -l$(C_FORTRAN_LIB)" library
+	@cd $(WORKSRC) && $(MAKE) LIB="$(LDFLAGS) -l$(C_FORTRAN_LIB)" CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) \
+		F77=$(F77) F77FLAGS="$(AMD_F77FLAGS)" BLAS="$(BLAS_F77_LINK) " fortran
 	@$(MAKECOOKIE)
 
 install-custom:

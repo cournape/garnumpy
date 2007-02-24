@@ -49,7 +49,7 @@ pre-configure:
 	@$(MAKECOOKIE)
 
 build-custom:
-	@cd $(WORKSRC) && $(MAKE) CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) F77=$(F77) F77FLAGS=$(AMD_F77FLAGS) lib
+	@cd $(WORKSRC) && $(MAKE) CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) F77=$(F77) F77FLAGS=$(AMD_F77FLAGS) library
 	@cd $(WORKSRC) && $(MAKE) CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) F77=$(F77) F77FLAGS=$(AMD_F77FLAGS) fortran
 	@$(MAKECOOKIE)
 
