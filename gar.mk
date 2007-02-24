@@ -36,45 +36,30 @@ include $(GARDIR)/gar.conf.mk
 # Default DESTIMG
 DESTIMG ?= main
 
-# Default image filesystem structure
-$(DESTIMG)_prefix ?= $(main_prefix)
-$(DESTIMG)_exec_prefix ?= $(main_exec_prefix)
-$(DESTIMG)_bindir ?= $(main_bindir)
-$(DESTIMG)_sbindir ?= $(main_sbindir)
-$(DESTIMG)_libexecdir ?= $(main_libexecdir)
-$(DESTIMG)_datadir ?= $(main_datadir)
-$(DESTIMG)_sysconfdir ?= $(main_sysconfdir)
-$(DESTIMG)_sharedstatedir ?= $(main_sharedstatedir)
-$(DESTIMG)_localstatedir ?= $(main_localstatedir)
-$(DESTIMG)_libdir ?= $(main_libdir)
-$(DESTIMG)_infodir ?= $(main_infodir)
-$(DESTIMG)_lispdir ?= $(main_lispdir)
-$(DESTIMG)_includedir ?= $(main_includedir)
-$(DESTIMG)_mandir ?= $(main_mandir)
-$(DESTIMG)_docdir ?= $(main_docdir)
-$(DESTIMG)_sourcedir ?= $(main_sourcedir)
-$(DESTIMG)_licensedir ?= $(main_licensedir)
-
-$(DESTIMG)_DESTDIR ?= $(main_DESTDIR)
-
-# Default image architecture
-$(DESTIMG)_GARCH ?= $(main_GARCH)
-$(DESTIMG)_GARHOST ?= $(main_GARHOST)
-
-# Default image tools
-$(DESTIMG)_CC ?= $(main_CC)
-$(DESTIMG)_F77 ?= $(main_F77)
-$(DESTIMG)_CXX ?= $(main_CXX)
-$(DESTIMG)_LD ?= $(main_LD)
-
-# Default image tool options
-$(DESTIMG)_CPPFLAGS ?= $(main_CPPFLAGS)
-$(DESTIMG)_CFLAGS ?= $(main_CFLAGS)
-$(DESTIMG)_F77FLAGS ?= $(main_F77FLAGS)
-#$(DESTIMG)_CXXFLAGS ?= $(main_CXXFLAGS)
-$(DESTIMG)_LDFLAGS ?= $(main_LDFLAGS)
-
-##### Set upstream package control variables #####
+## Default image filesystem structure
+#$(DESTIMG)_prefix ?= $(main_prefix)
+#$(DESTIMG)_exec_prefix ?= $(main_exec_prefix)
+#$(DESTIMG)_bindir ?= $(main_bindir)
+#$(DESTIMG)_sbindir ?= $(main_sbindir)
+#$(DESTIMG)_libexecdir ?= $(main_libexecdir)
+#$(DESTIMG)_datadir ?= $(main_datadir)
+#$(DESTIMG)_sysconfdir ?= $(main_sysconfdir)
+#$(DESTIMG)_sharedstatedir ?= $(main_sharedstatedir)
+#$(DESTIMG)_localstatedir ?= $(main_localstatedir)
+#$(DESTIMG)_libdir ?= $(main_libdir)
+#$(DESTIMG)_infodir ?= $(main_infodir)
+#$(DESTIMG)_lispdir ?= $(main_lispdir)
+#$(DESTIMG)_includedir ?= $(main_includedir)
+#$(DESTIMG)_mandir ?= $(main_mandir)
+#$(DESTIMG)_docdir ?= $(main_docdir)
+#$(DESTIMG)_sourcedir ?= $(main_sourcedir)
+#$(DESTIMG)_licensedir ?= $(main_licensedir)
+#
+#$(DESTIMG)_DESTDIR ?= $(main_DESTDIR)
+#
+## Default image architecture
+#$(DESTIMG)_GARCH ?= $(main_GARCH)
+#$(DESTIMG)_GARHOST ?= $(main_GARHOST)
 
 # Filesystem structure
 prefix = $($(DESTIMG)_prefix)
@@ -107,19 +92,19 @@ GARHOST = $($(DESTIMG)_GARHOST)
 # value of $(GARHOST) causes the those packages to produce native tools.
 GARTARGET ?= $(GARHOST)
 
-# Tools
-CC = $($(DESTIMG)_CC)
-CXX = $($(DESTIMG)_CXX)
-F77 = $($(DESTIMG)_F77)
-LD = $($(DESTIMG)_LD)
-
-# Tool options -- These are append-mode assignments so that packages may
-# provide additional tool options.
-CPPFLAGS += $($(DESTIMG)_CPPFLAGS)
-CFLAGS += $($(DESTIMG)_CFLAGS)
-F77FLAGS += $($(DESTIMG)_F77FLAGS)
-#CXXFLAGS += $($(DESTIMG)_CXXFLAGS)
-LDFLAGS += $($(DESTIMG)_LDFLAGS)
+## Tools
+#CC = $($(DESTIMG)_CC)
+#CXX = $($(DESTIMG)_CXX)
+#F77 = $($(DESTIMG)_F77)
+#LD = $($(DESTIMG)_LD)
+#
+## Tool options -- These are append-mode assignments so that packages may
+## provide additional tool options.
+#CPPFLAGS += $($(DESTIMG)_CPPFLAGS)
+#CFLAGS += $($(DESTIMG)_CFLAGS)
+#F77FLAGS += $($(DESTIMG)_F77FLAGS)
+##CXXFLAGS += $($(DESTIMG)_CXXFLAGS)
+#LDFLAGS += $($(DESTIMG)_LDFLAGS)
 
 ####### Defaults for GAR target control variables #######
 DISTNAME ?= $(GARNAME)-$(GARVERSION)
@@ -138,29 +123,29 @@ MANIFEST_FILE ?= manifest
 ALLFILES ?= $(DISTFILES) $(PATCHFILES)
 STAGINGDIR ?= $(build_DESTDIR)$(build_prefix)/staging
 
-# allow us to use programs we just built
-PATH := $(build_DESTDIR)$(build_libdir)/ccache:$(build_DESTDIR)$(build_bindir):$(build_DESTDIR)$(build_sbindir):$(PATH):$(build_DESTDIR)$(build_bindir):$(build_DESTDIR)$(build_sbindir)
-# this causes pain for all involved once glibc is built.
-LD_LIBRARY_PATH := /lib:$(DESTDIR)$(libdir):$(build_DESTDIR)$(build_prefix)/lib:/lib:/usr/lib
-# or at least it did before we had DESTDIR and fully-munged
-# builddeps.  The following may be more of a hindrance than a
-# help nowadays:
-#LD_PRELOAD +=/lib/libc.so.6
-
-# XXX: These macros should go in lib
-DIRSTODOTS = $(subst . /,./,$(patsubst %,/..,$(subst /, ,/$(1))))
-ROOTFROMDEST = $(call DIRSTODOTS,$(DESTDIR))
-
-# XXX: BUILD_CLEAN handling should go in lib
-ifdef BUILD_CLEAN
-DO_BUILD_CLEAN = buildclean
-export CCACHE_DISABLE=foo
-else
-DO_BUILD_CLEAN =
-endif
-
-PARALLELMFLAGS ?= $(MFLAGS)
-export PARALLELMFLAGS
+## allow us to use programs we just built
+#PATH := $(build_DESTDIR)$(build_libdir)/ccache:$(build_DESTDIR)$(build_bindir):$(build_DESTDIR)$(build_sbindir):$(PATH):$(build_DESTDIR)$(build_bindir):$(build_DESTDIR)$(build_sbindir)
+## this causes pain for all involved once glibc is built.
+#LD_LIBRARY_PATH := /lib:$(DESTDIR)$(libdir):$(build_DESTDIR)$(build_prefix)/lib:/lib:/usr/lib
+## or at least it did before we had DESTDIR and fully-munged
+## builddeps.  The following may be more of a hindrance than a
+## help nowadays:
+##LD_PRELOAD +=/lib/libc.so.6
+#
+## XXX: These macros should go in lib
+#DIRSTODOTS = $(subst . /,./,$(patsubst %,/..,$(subst /, ,/$(1))))
+#ROOTFROMDEST = $(call DIRSTODOTS,$(DESTDIR))
+#
+## XXX: BUILD_CLEAN handling should go in lib
+#ifdef BUILD_CLEAN
+#DO_BUILD_CLEAN = buildclean
+#export CCACHE_DISABLE=foo
+#else
+#DO_BUILD_CLEAN =
+#endif
+#
+#PARALLELMFLAGS ?= $(MFLAGS)
+#export PARALLELMFLAGS
 
 INSTALL_DIRS = $(addprefix $(DESTDIR),$(prefix) $(exec_prefix) $(bindir) $(sbindir) $(libexecdir) $(datadir) $(sysconfdir) $(sharedstatedir) $(localstatedir) $(libdir) $(infodir) $(lispdir) $(includedir) $(mandir) $(foreach NUM,1 2 3 4 5 6 7 8, $(mandir)/man$(NUM)) $(sourcedir))
 

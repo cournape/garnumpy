@@ -23,9 +23,7 @@ DEPENDS =
 BUILDDEPS =
 
 
-#CONFIGURE_SCRIPTS = $(WORKSRC)/configure
-#BUILD_SCRIPTS = $(WORKSRC)/Makefile
-#INSTALL_SCRIPTS = $(WORKSRC)/Makefile
+#CONFIGURE_SCRIPTS = custom
 BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 
@@ -40,18 +38,23 @@ INSTALL_OVERRIDE_DIRS =
 include ../../gar.mk
 
 post-extract:
-	@echo " ===> moving UFconfig files to $(WORKSRC)"
-	#@mv bootstrap/UFconfig/$(EXTRACTDIR)/*.f $(WORKSRC)
-	@echo 'mv bootstrap/UFconfig/$(EXTRACTDIR)/*.f $(WORKSRC)'
-	#@$(MAKECOOKIE)
+	@echo " ===> copying AMD files to $(WORKSRC)"
+	@cp -r $(EXTRACTDIR)/AMD $(WORKSRC)
+	#@ln -sf $(PWD)/$(WORKSRC) $(EXTRACTDIR)/AMD 
+	@$(MAKECOOKIE)
 
-#build-custom:
-#	# build objects
-#	@cd $(WORKSRC) && $(F77) $(BLAS_F77_OPTS) *.f
-#	# build static lib from it
-#	cd $(WORKSRC) && $(AR) -r $(BLASNAME) *.o && $(RANLIB) $(BLASNAME)
-#	@$(MAKECOOKIE)
-#
-#install-custom:
-#	echo "install -c $(DISTNAME)/$(BLASNAME) $(libdir)"
-#	@cd $(WORKSRC) && install -c $(BLASNAME) $(libdir)
+pre-configure:
+	@echo " ===> copying UFconfig to $(EXTRACTDIR)"
+	@cp -r $(GARDIR)/bootstrap/UFconfig/$(EXTRACTDIR)/UFconfig $(EXTRACTDIR)
+	@$(MAKECOOKIE)
+
+build-custom:
+	@cd $(WORKSRC) && $(MAKE) CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) F77=$(F77) F77FLAGS=$(AMD_F77FLAGS) lib
+	@cd $(WORKSRC) && $(MAKE) CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) F77=$(F77) F77FLAGS=$(AMD_F77FLAGS) fortran
+	@$(MAKECOOKIE)
+
+install-custom:
+	@install -c $(WORKSRC)/Lib/libamd.a $(libdir)
+	@install -c $(WORKSRC)/Lib/libamdf77.a $(libdir)
+	@install -c $(WORKSRC)/Lib/libamd.def $(libdir)
+	@install -c $(WORKSRC)/Include/amd.h $(UMFPACK_INCDIR)

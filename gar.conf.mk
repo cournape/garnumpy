@@ -56,55 +56,66 @@ CPPFLAGS += -I$(includedir)
 CFLAGS += -I$(includedir) -L$(libdir)
 LDFLAGS += -Wl,--export-dynamic -L$(libdir)
 
-# allow us to link to libraries we installed
-#main_CPPFLAGS += -nostdinc
-#main_CFLAGS += -nostdinc -nostdlib
-#main_LDFLAGS += -nostdlib
-main_CPPFLAGS += -I$(DESTDIR)$(includedir) 
-main_CFLAGS += -Os -I$(DESTDIR)$(includedir) -L$(DESTDIR)$(libdir) 
-#main_CXXFLAGS += -Os -I$(DESTDIR)$(includedir) -L$(DESTDIR)$(libdir) 
-main_LDFLAGS += -L$(DESTDIR)$(libdir) 
-main_CPPFLAGS += -I$(GCC_INCLUDEDIR) -I$(CROSS_GCC_INCLUDEDIR)
-main_CFLAGS += -I$(GCC_INCLUDEDIR) -I$(CROSS_GCC_INCLUDEDIR) -L$(GCC_LIBDIR) -L$(CROSS_GCC_LIBDIR)
-#main_CXXFLAGS += -I$(GCC_INCLUDEDIR) -I$(CROSS_GCC_INCLUDEDIR) -L$(GCC_LIBDIR) -L$(CROSS_GCC_LIBDIR)
-main_LDFLAGS += -L$(GCC_LIBDIR) -L$(CROSS_GCC_LIBDIR)
-
-# allow us to link to libraries we installed
-build_CPPFLAGS += -I$(DESTDIR)$(includedir) 
-build_CFLAGS += -Os -I$(DESTDIR)$(includedir) -L$(DESTDIR)$(libdir) 
-#build_CXXFLAGS += -Os -I$(DESTDIR)$(includedir) -L$(DESTDIR)$(libdir) 
-build_LDFLAGS += -L$(DESTDIR)$(libdir) 
-
-# Default main_CC to gcc, $(DESTIMG)_CC to main_CC and set CC based on $(DESTIMG)
-#main_CC ?= $(GARHOST)-gcc
-main_CC ?= gcc
-main_CXX ?= g++
-main_F77 ?= g77
-#main_LD ?= $(GARHOST)-ld
-main_LD ?= ld
-build_CC ?= gcc
-build_CXX ?= g++
-build_LD ?= ld
+## allow us to link to libraries we installed
+##main_CPPFLAGS += -nostdinc
+##main_CFLAGS += -nostdinc -nostdlib
+##main_LDFLAGS += -nostdlib
+#main_CPPFLAGS += -I$(DESTDIR)$(includedir) 
+#main_CFLAGS += -Os -I$(DESTDIR)$(includedir) -L$(DESTDIR)$(libdir) 
+##main_CXXFLAGS += -Os -I$(DESTDIR)$(includedir) -L$(DESTDIR)$(libdir) 
+#main_LDFLAGS += -L$(DESTDIR)$(libdir) 
+#main_CPPFLAGS += -I$(GCC_INCLUDEDIR) -I$(CROSS_GCC_INCLUDEDIR)
+#main_CFLAGS += -I$(GCC_INCLUDEDIR) -I$(CROSS_GCC_INCLUDEDIR) -L$(GCC_LIBDIR) -L$(CROSS_GCC_LIBDIR)
+##main_CXXFLAGS += -I$(GCC_INCLUDEDIR) -I$(CROSS_GCC_INCLUDEDIR) -L$(GCC_LIBDIR) -L$(CROSS_GCC_LIBDIR)
+#main_LDFLAGS += -L$(GCC_LIBDIR) -L$(CROSS_GCC_LIBDIR)
+#
+## allow us to link to libraries we installed
+#build_CPPFLAGS += -I$(DESTDIR)$(includedir) 
+#build_CFLAGS += -Os -I$(DESTDIR)$(includedir) -L$(DESTDIR)$(libdir) 
+##build_CXXFLAGS += -Os -I$(DESTDIR)$(includedir) -L$(DESTDIR)$(libdir) 
+#build_LDFLAGS += -L$(DESTDIR)$(libdir) 
+#
+## Default main_CC to gcc, $(DESTIMG)_CC to main_CC and set CC based on $(DESTIMG)
+##main_CC ?= $(GARHOST)-gcc
+#main_CC ?= gcc
+#main_CXX ?= g++
+#main_F77 ?= g77
+##main_LD ?= $(GARHOST)-ld
+#main_LD ?= ld
+#build_CC ?= gcc
+#build_CXX ?= g++
+#build_LD ?= ld
 
 #===========================
 # Sensible compiler defaults
 #===========================
 CC ?= gcc
 CXX ?= g++
-F77 ?= g77
+F77 = gfortran
+#LD	?= ld
 
-# GARCH and GARHOST for main.  Override these for cross-compilation
-#main_GARCH ?= i386
-#main_GARHOST ?= i386-pc-linux-gnu
-main_GARCH ?= 
-main_GARHOST ?= 
+# If we use gfortran, we need the following library flags for linking
+LDFLAGS	+= "-lgfortran -lm -lgfortranbegin"
 
-# GARCH and GARHOST for build.  Do not change these.
-build_GARCH := $(shell arch)
-build_GARHOST := $(GARBUILD)
+# If -fno-f2c is used anywhere, use it EVERYWHERE !!!!!
+#F77_COMMON	= "-fno-f2c -O3 -funroll-all-loops -c"
+F77_COMMON	= "-O3 -funroll-all-loops -c"
+FFLAGS	+= $(F77_COMMON)
+# Some C compilers need special library when using fortran libs
+C_FORTRAN_LIB = "g2c"
 
-# Don't build these packages as in the build image
-build_NODEPEND = devel/glibc devel/gcc-primitives
+## GARCH and GARHOST for main.  Override these for cross-compilation
+##main_GARCH ?= i386
+##main_GARHOST ?= i386-pc-linux-gnu
+#main_GARCH ?= 
+#main_GARHOST ?= 
+#
+## GARCH and GARHOST for build.  Do not change these.
+#build_GARCH := $(shell arch)
+#build_GARHOST := $(GARBUILD)
+#
+## Don't build these packages as in the build image
+#build_NODEPEND = devel/glibc devel/gcc-primitives
 
 # This is for foo-config chaos
 PKG_CONFIG_PATH=$(DESTDIR)$(libdir)/pkgconfig/
@@ -114,8 +125,8 @@ PKG_CONFIG_PATH=$(DESTDIR)$(libdir)/pkgconfig/
 STAGE_EXPORTS = DESTDIR prefix exec_prefix bindir sbindir libexecdir datadir
 STAGE_EXPORTS += sysconfdir sharedstatedir localstatedir libdir infodir lispdir
 STAGE_EXPORTS += includedir mandir docdir sourcedir
-STAGE_EXPORTS += CPPFLAGS CFLAGS LDFLAGS
-STAGE_EXPORTS += CC CXX
+STAGE_EXPORTS += CPPFLAGS CFLAGS LDFLAGS FFLAGS
+STAGE_EXPORTS += CC CXX F77
 
 CONFIGURE_ENV += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
 BUILD_ENV += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
@@ -135,8 +146,9 @@ GARPKGDIR = $(GARPKGROOT)/$(GARNAME)
 # prepend the local file listing
 FILE_SITES = file://$(FILEDIR)/ file://$(GARCHIVEDIR)/
 
-SOURCEFORGEDL	= http://downloads.sourceforge.net/
-#MASTER_SITES 	+= $(SOURCEFORGEDL)
+#SOURCEFORGEDL	= http://jaist.dl.sourceforge.net/sourceforge
+SOURCEFORGEDL	= http://dl.sourceforge.net/
+MASTER_SITES 	+= $(SOURCEFORGEDL)
 
 ## Extra configuration for the lnx-bbc build
 #GAR_EXTRA_CONF += devel/gcc/package-api.mk
@@ -163,8 +175,8 @@ PMAKE	= $(MAKE) -j 4
 
 # valid values for BLASLAPACK: atlas, system or netlib
 #BLASLAPACK	= system
-#BLASLAPACK	= atlas
-BLASLAPACK	= netlib
+BLASLAPACK	= atlas
+#BLASLAPACK	= netlib
 
 # - system: assumes that blas lapack are available, you should set
 #   SYSTEM_BLAS_NAME, SYSTEM_BLAS_DIR, SYSTEM_LAPACK_DIR, SYSTEM_LAPACK_NAME
@@ -178,13 +190,9 @@ SYSTEM_BLAS_DIR=
 SYSTEM_LAPACK_NAME=
 SYSTEM_LAPACK_DIR=
 
-# If -fno-f2c is used anywhere, use it EVERYWHERE !!!!!
-#F77_COMMON	= "-fno-f2c -O3 -funroll-all-loops -c"
-F77_COMMON	= "-O3 -funroll-all-loops -c"
-
 # Set to 0 to skip lapack testing, 1 for testing (take time, but strongly
 # advised if you intend to use this for production purpose)
-TEST_NETLIB_LAPACK=0
+TEST_NETLIB_LAPACK=1
 
 # Set to 1 to try using gcc3 instead of current gcc for kernels
 # (may produce much more efficient code on some architecture, you 
@@ -192,6 +200,12 @@ TEST_NETLIB_LAPACK=0
 ATLAS_USE_GCC3	= 0
 GCC3_PATH		= /usr/bin/gcc-3.3
 
+#----------------------
+# General fftw3 options
+#----------------------
+# possible values: fftw3
+FFT			= fftw3
+FFTW3_LIBDIR= $(libdir)
 
 #-----------------------
 # Python related option
@@ -235,11 +249,13 @@ LAPACKOSNAME	= LINUX
 NETLIB_BLAS_F77_OPTS 	= $(F77_COMMON) 
 NETLIB_BLAS_FULL_NAME	= libblas.a
 NETLIB_BLAS_NAME		= blas
+NETLIB_BLAS_DIR			= $(libdir)
 NETLIB_BLAS_LOCATION	= $(libdir)/$(NETLIB_BLAS_FULL_NAME)
 
 NETLIB_LAPACK_F77_OPTS 	= $(F77_COMMON)
 NETLIB_LAPACK_FULL_NAME	= liblapack.a
 NETLIB_LAPACK_NAME		= lapack
+NETLIB_LAPACK_DIR		= $(libdir)
 NETLIB_LAPACK_LOCATION	= $(libdir)/$(NETLIB_LAPACK_FULL_NAME)
 
 #===========================================
@@ -250,9 +266,53 @@ ATLASPREFIX				= $(prefix)/atlas
 ATLASLIBDIR				= $(prefix)/atlas/lib
 
 ATLAS_BLAS_FULL_NAME	= libblas.a
-ATLAS_BLAS_NAME			= fblas
+ATLAS_BLAS_NAME			= blas
 ATLAS_BLAS_SLOCATION	= $(libdir)/$(ATLAS_BLAS_NAME)
 
 ATLAS_LAPACK_FULL_NAME	= liblapack.a
 ATLAS_LAPACK_NAME		= lapack
 ATLAS_LAPACK_LOCATION	= $(libdir)/$(ATLAS_LAPACK_NAME)
+
+#===============================================
+# FINAL BLAS/LAPACK related values (don't touch)
+#===============================================
+# BLAS_NAME, etc... are the values used in all sub Makefile.
+ifeq ($(BLASLAPACK), system)
+	BLAS_NAME	= $(SYSTEM_BLAS_NAME)
+	BLAS_DIR	= $(SYSTEM_BLAS_DIR)
+	LAPACK_NAME	= $(SYSTEM_LAPACK_NAME)
+	LAPACK_DIR	= $(SYSTEM_LAPACK_DIR)
+else 
+	ifeq ($(BLASLAPACK), atlas)
+		BLAS_NAME	= $(ATLAS_BLAS_NAME)
+		BLAS_DIR	= $(ATLASLIBDIR)
+		LAPACK_NAME	= $(ATLAS_LAPACK_NAME)
+		LAPACK_DIR	= $(ATLASLIBDIR)
+	else 
+		ifeq ($(BLASLAPACK), netlib)
+			BLAS_NAME	= $(NETLIB_BLAS_NAME)
+			BLAS_DIR	= $(NETLIB_BLAS_DIR)
+			LAPACK_NAME	= $(NETLIB_LAPACK_NAME)
+			LAPACK_DIR	= $(NETLIB_LAPACK_DIR)
+		endif
+	endif
+endif
+
+#===============================================
+# FINAL UMFPACK related values (don't touch)
+#===============================================
+UMFPACK_NAME	= umfpack
+UMFPACK_DIR		= $(libdir)
+UMFPACK_INCDIR	= $(includedir)/umfpack
+
+AMD_NAME	= amd
+AMD_DIR		= $(libdir)
+
+#===========================================
+# FFTW3 OPTIONS  (Don't touch)
+#===========================================
+FFTW3_F77_FLAGS 	= $(F77_COMMON) 
+
+ifeq ($(FFT), fftw3)
+	FFT_LIB_DIR	= $(libdir)
+endif

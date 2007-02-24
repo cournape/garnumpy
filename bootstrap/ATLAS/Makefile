@@ -2,7 +2,7 @@ GARNAME = atlas
 GARVERSION = 3.7.28
 CATEGORIES = 
 
-MASTER_SITES += $(SOURCEFORGEDL)/math-atlas
+MASTER_SITES += $(SOURCEFORGEDL)/math-atlas/
 
 DISTFILES = $(GARNAME)$(GARVERSION).tar.bz2
 PATCHFILES = garnumpy-config.diff gar-ppc-fix.diff

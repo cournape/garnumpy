@@ -22,11 +22,6 @@ DEPENDS =
 # Builddeps are installed in the build DESTIMG
 BUILDDEPS =
 
-
-#CONFIGURE_SCRIPTS = $(WORKSRC)/configure
-#BUILD_SCRIPTS = $(WORKSRC)/Makefile
-#INSTALL_SCRIPTS = $(WORKSRC)/Makefile
-EXTRACT_SCRIPTS = custom
 BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 
@@ -40,23 +35,28 @@ INSTALL_OVERRIDE_DIRS =
 # This should go before any hand-made rules.
 include ../../gar.mk
 
-# This is ugly: blas archive extract its files in the same directory instead of 
+# This is ugly: umfpack archive extract its files in the same directory instead of 
 # creating one. This does not work with gar, and I don't manage to change the
 # extract script, so instead, this post rule move everything from the EXTRACTDIR
 # to the WORKSRC
-#post-extract:
-#	@echo " ===> moving files to $(WORKSRC)"
-#	@mkdir $(WORKSRC)
-#	@mv $(EXTRACTDIR)/*.f $(WORKSRC)
-#	@$(MAKECOOKIE)
-#
-#build-custom:
-#	# build objects
-#	@cd $(WORKSRC) && $(F77) $(BLAS_F77_OPTS) *.f
-#	# build static lib from it
-#	cd $(WORKSRC) && $(AR) -r $(BLASNAME) *.o && $(RANLIB) $(BLASNAME)
-#	@$(MAKECOOKIE)
-#
-#install-custom:
-#	echo "install -c $(DISTNAME)/$(BLASNAME) $(libdir)"
-#	@cd $(WORKSRC) && install -c $(BLASNAME) $(libdir)
+post-extract:
+	@echo " ===> moving UMFPACK files to $(WORKSRC)"
+	@mv $(EXTRACTDIR)/UMFPACK $(WORKSRC)
+	@$(MAKECOOKIE)
+
+pre-configure:
+	@echo " ===> copying UFconfig dir to $(EXTRACTDIR)"
+	@cp -r $(GARDIR)/bootstrap/UFconfig/$(EXTRACTDIR)/UFconfig $(EXTRACTDIR)
+	@echo " ===> copying AMD dir to $(EXTRACTDIR)"
+	@cp -r $(GARDIR)/bootstrap/AMD/$(EXTRACTDIR)/AMD $(EXTRACTDIR)
+	@$(MAKECOOKIE)
+
+build-custom:
+	@cd $(WORKSRC) && $(MAKE) CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) F77=$(F77) F77FLAGS=$(AMD_F77FLAGS) BLAS="-L$(BLAS_DIR) -l$(BLAS_NAME) -l$(C_FORTRAN_LIB)" library
+	@cd $(WORKSRC) && $(MAKE) CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) F77=$(F77) F77FLAGS=$(AMD_F77FLAGS) BLAS="-L$(BLAS_DIR) -l$(BLAS_NAME) " fortran
+	@$(MAKECOOKIE)
+
+install-custom:
+	@install -c $(WORKSRC)/Lib/libumfpack.a $(libdir)
+	@install -c $(WORKSRC)/Lib/libumfpack.def $(libdir)
+	@install -c $(WORKSRC)/Include/*.h $(UMFPACK_INCDIR)

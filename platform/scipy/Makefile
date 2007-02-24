@@ -2,7 +2,7 @@ GARNAME = scipy
 GARVERSION = 0.5.2
 CATEGORIES = 
 
-MASTER_SITES = $(SOURCERFORGEDL)/scipy
+MASTER_SITES = $(SOURCEFORGEDL)/scipy/
 
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = 
@@ -17,8 +17,8 @@ endef
 
 # Dependencies are of the form categorydir/packagedir
 # LIBDEPS are for libraries, and DEPENDS are for everything else
-LIBDEPS =
-DEPENDS = platform/numpy
+LIBDEPS = $(shell . $(GARDIR)/blop.sh && get_scipy_dep $(FFT))
+DEPENDS = platform/numpy bootstrap/umfpack
 # Builddeps are installed in the build DESTIMG
 BUILDDEPS =
 
@@ -55,17 +55,11 @@ configure-custom:
 	fi;
 	# Change default path when looking for libs to fake dir,
 	# so we can set everything by env variables
-	@. ../../blop.sh && cd $(WORKSRC) && SYSTEM_BLAS_NAME=$(SYSTEM_BLAS_NAME) && \
-	SYSTEM_BLAS_DIR=$(SYSTEM_BLAS_DIR) && \
-	SYSTEM_BLAS_NAME=$(SYSTEM_BLAS_NAME) && \
-	SYSTEM_LAPACK_DIR=$(SYSTEM_LAPACK_DIR) && \
-	SYSTEM_LAPACK_NAME=$(SYSTEM_LAPACK_NAME) && \
-	NETLIB_BLAS_DIR=$(libdir) && \
-	NETLIB_BLAS_NAME=$(NETLIB_BLAS_NAME) && \
-	NETLIB_LAPACK_DIR=$(libdir) && \
-	NETLIB_LAPACK_NAME=$(NETLIB_LAPACK_NAME) && \
-	ATLASLIBDIR=$(ATLASLIBDIR) && \
-	get_numpy_sitecfg $(BLASLAPACK) > site.cfg
+	@. ../../blop.sh && cd $(WORKSRC) && get_numpy_sitecfg \
+	$(BLASLAPACK) $(BLAS_DIR) $(BLAS_NAME) \
+	$(LAPACK_DIR) $(LAPACK_NAME) \
+	$(FFT) $(FFT_LIB_DIR) \
+	$(UMFPACK_DIR) $(UMFPACK_INCDIR) $(AMD_DIR) > site.cfg
 	@cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py config
 	@$(MAKECOOKIE)
 

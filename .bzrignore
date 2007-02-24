@@ -7,3 +7,12 @@ bootstrap/blas/work
 bootstrap/lapack/cookies
 bootstrap/lapack/download
 bootstrap/lapack/work
+bootstrap/fftw3/cookies
+bootstrap/fftw3/download
+bootstrap/fftw3/work
+platform/numpy/cookies
+platform/numpy/download
+platform/numpy/work
+platform/scipy/cookies
+platform/scipy/download
+platform/scipy/work

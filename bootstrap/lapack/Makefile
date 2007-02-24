@@ -52,8 +52,12 @@ configure-custom:
 	@cd $(WORKSRC) && cp INSTALL/make.inc.$(LAPACKOSNAME) make.inc
 
 build-custom:
-	# default target include test, it seems
-	# Using PMAKE with lib target does NOT work. Dunno if it is fixable
+	# Use separate rules for each precision to avoid running parallels AR/RANLIB at the same time, which
+	# is likely to produce corrupted archives...
+	@cd $(WORKSRC)/SRC &&  $(PMAKE) FORTRAN=$(F77) LOADER=$(F77) single
+	@cd $(WORKSRC)/SRC &&  $(PMAKE) FORTRAN=$(F77) LOADER=$(F77) double
+	@cd $(WORKSRC)/SRC &&  $(PMAKE) FORTRAN=$(F77) LOADER=$(F77) complex
+	@cd $(WORKSRC)/SRC &&  $(PMAKE) FORTRAN=$(F77) LOADER=$(F77) complex16
 	@cd $(WORKSRC) &&  $(MAKE) FORTRAN=$(F77) LOADER=$(F77) BLASLIB="$(libdir)/$(NETLIB_BLAS_FULL_NAME)" LAPACKLIB=$(NETLIB_LAPACK_FULL_NAME) OPTS=$(NETLIB_LAPACK_F77_OPTS) lib
 	@$(MAKECOOKIE)
 

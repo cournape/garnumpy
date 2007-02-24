@@ -22,6 +22,8 @@ DEPENDS =
 # Builddeps are installed in the build DESTIMG
 BUILDDEPS =
 
+INSTALL_SCRIPTS = custom
+
 CONFIGURE_ARGS = $(DIRPATHS)
 NODIRPATHS = 
 
@@ -31,3 +33,13 @@ INSTALL_OVERRIDE_DIRS =
 
 # This should go before any hand-made rules.
 include ../../gar.mk
+
+post-extract:
+	@echo " ===> copying UFconfig files to $(WORKSRC)"
+	@cp -r $(EXTRACTDIR)/UFconfig $(WORKSRC)
+	#@ln -sf $(PWD)/$(WORKSRC) $(EXTRACTDIR)/AMD 
+	@$(MAKECOOKIE)
+
+install-custom:
+	@install -d $(UMFPACK_INCDIR)
+	@install -c $(WORKSRC)/UFconfig.h $(UMFPACK_INCDIR)
