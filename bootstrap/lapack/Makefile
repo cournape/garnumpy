@@ -65,7 +65,7 @@ post-build:
 	# For testing compiled lapack
 	@if [ $(TEST_NETLIB_LAPACK) -eq 1 ]; then \
 		cd $(WORKSRC);\
-		$(MAKE) FORTRAN=$(F77) LOADER=$(F77) BLASLIB="$(libdir)/$(NETLIB_BLAS_FULL_NAME)" LAPACKLIB=$(NETLIB_LAPACK_FULL_NAME) OPTS=$(NETLIB_LAPACK_F77_OPTS) testing; \
+		$(MAKE) FORTRAN=$(F77) LOADER=$(F77) BLASLIB="$(libdir)/$(NETLIB_BLAS_FULL_NAME)" LAPACKLIB=$(NETLIB_LAPACK_FULL_NAME) OPTS="$(NETLIB_LAPACK_F77_OPTS)" testing; \
 	fi;
 
 install-custom:
