@@ -56,4 +56,4 @@ Dependencises:
     UBUNTU (6.10):
         You can build a fully functional scipy + matplotlib by installing the following:
 
-        sudo apt-get install python python-dev gcc g77 python-gtk2-dev patch
+        sudo apt-get install python python-dev gcc g77 python-gtk2-dev patch swig g++
