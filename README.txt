@@ -51,3 +51,9 @@ Supported softwares:
     - numpy and scipy (in platform)
     - ipython (in tools)
     - matplolib (in gui)
+
+Dependencises:
+    UBUNTU (6.10):
+        You can build a fully functional scipy + matplotlib by installing the following:
+
+        sudo apt-get install python python-dev gcc g77 python-gtk2-dev

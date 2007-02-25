@@ -48,6 +48,28 @@ get_numpy_dep()
     esac 
 }
 
+# arg1: BLASLAPACK
+get_umfpack_dep()
+{
+    case $1 in
+        "system")
+            echo ""
+            return 0
+            ;;
+        "atlas")
+            echo "bootstrap/ATLAS"
+            return 0
+            ;;
+        "netlib")
+            echo "bootstrap/blas bootstrap/lapack"
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac 
+}
+
 # arg1: BLASLAPACK (possible values: system, etc... see gar.conf.mk)
 # arg2: BLAS_DIR
 # arg3: BLAS_NAME

@@ -1,26 +1,21 @@
-Last Change: Fri Feb 23 05:00 PM 2007 J
-    - fetch from SVN instead of release as option
-    - test target
-    - sync env values in startgarnumpy and in gar.conf.mk
-    - better handling of compiler specific stuff (fortan and C) (clean up the
-      whole main_CC vs CC vs ... mess)
-    - -fno-f2c ? Use it or not with g77 ? For Atlas, set the fortran compiler
-      to same value than NETLIB
+Last Change: Sun Feb 25 03:00 PM 2007 J
+    - Clean umfpack mess: the makefile are a mess, we should replace it with
+      our own Makefile (taking them from debian pkg ?)
+    - for now, only CC=gcc and F77=g77 works, on ubuntu edgy:
+      test on FC (6 ?) with gcc, and ubuntu + intel compilers at least.
     - having a serie of sensible default for compilers. For example, one set
       for gcc/g77, one for ICC, etc...)
-
-Values to modifify:
-    - python version in startnumpy.sh
-    - SCIPYSANDPKG: a string of list of scipy packages to enable
-    - by default: 
+    - fetch from SVN instead of release as option
+    - sync env values in startgarnumpy and in gar.conf.mk
+    - -fno-f2c ? Use it or not with g77 ? For Atlas, set the fortran compiler
+      to same value than NETLIB
 
 For ubuntu (edgy at least):
     - numpy:
         - gcc
         - g++
-        - gfortran
+        - g77
         - python
-        - atlas3-base-dev
     - mpl:
         - python-gtk2-dev
 

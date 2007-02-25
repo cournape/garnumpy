@@ -17,7 +17,7 @@ endef
 
 # Dependencies are of the form categorydir/packagedir
 # LIBDEPS are for libraries, and DEPENDS are for everything else
-LIBDEPS = bootstrap/AMD
+LIBDEPS = bootstrap/AMD $(shell . $(GARDIR)/blop.sh && get_umfpack_dep $(BLASLAPACK) )
 DEPENDS =
 # Builddeps are installed in the build DESTIMG
 BUILDDEPS =
@@ -52,10 +52,14 @@ pre-configure:
 	@$(MAKECOOKIE)
 
 build-custom:
-	@cd $(WORKSRC) && $(MAKE) LIB="$(LDFLAGS)" CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) \
-		F77=$(F77) F77FLAGS="$(AMD_F77FLAGS)" BLAS="$(BLAS_F77_LINK) -l$(C_FORTRAN_LIB)" library
-	@cd $(WORKSRC) && $(MAKE) LIB="$(LDFLAGS) -l$(C_FORTRAN_LIB)" CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) \
-		F77=$(F77) F77FLAGS="$(AMD_F77FLAGS)" BLAS="$(BLAS_F77_LINK) " fortran
+	@cd $(WORKSRC) && $(MAKE) LIB="$(LDFLAGS)" CC=$(CC) \
+		AR="$(AR) rc" RANLIB=$(RANLIB) \
+		F77=$(F77) F77FLAGS="$(AMD_F77FLAGS)" \
+		BLAS="$(BLAS_F77_LINK) -l$(C_FORTRAN_LIB)" library
+	@cd $(WORKSRC) && $(MAKE) LIB="$(LDFLAGS)" \
+		BLAS="$(BLAS_F77_LINK) -l$(C_FORTRAN_LIB)" \
+		CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) \
+		F77=$(F77) F77FLAGS="$(AMD_F77FLAGS)" fortran
 	@$(MAKECOOKIE)
 
 install-custom:

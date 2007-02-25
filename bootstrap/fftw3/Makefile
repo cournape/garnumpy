@@ -37,7 +37,7 @@ INSTALL_OVERRIDE_DIRS =
 include ../../gar.mk
 
 configure-custom:
-	cd $(WORKSRC) && CC=$(CC) F77=$(F77) FFLAGS=$(FFTW3_F77_FLAGS) ./configure $(DIRPATHS) --enable-shared=yes
+	cd $(WORKSRC) && CC=$(CC) F77=$(F77) FFLAGS="$(FFTW3_F77_FLAGS)" ./configure $(DIRPATHS) --enable-shared=yes
 	@$(MAKECOOKIE)
 
 build-custom:

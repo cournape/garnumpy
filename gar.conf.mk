@@ -92,7 +92,8 @@ LDFLAGS += -Wl,--export-dynamic -L$(libdir)
 #===========================
 CC ?= gcc
 CXX ?= g++
-F77 = gfortran
+F77 = g77
+F95 = gfortran
 #LD	?= ld
 
 # If we use gfortran, we need the following library flags for linking
@@ -177,8 +178,8 @@ PMAKE	= $(MAKE) -j 4
 
 # valid values for BLASLAPACK: atlas, system or netlib
 #BLASLAPACK	= system
-BLASLAPACK	= atlas
-#BLASLAPACK	= netlib
+#BLASLAPACK	= atlas
+BLASLAPACK	= netlib
 
 # - system: assumes that blas lapack are available, you should set
 #   SYSTEM_BLAS_NAME, SYSTEM_BLAS_DIR, SYSTEM_LAPACK_DIR, SYSTEM_LAPACK_NAME
@@ -194,7 +195,7 @@ SYSTEM_LAPACK_DIR=
 
 # Set to 0 to skip lapack testing, 1 for testing (take time, but strongly
 # advised if you intend to use this for production purpose)
-TEST_NETLIB_LAPACK=1
+TEST_NETLIB_LAPACK=0
 
 # Set to 1 to try using gcc3 instead of current gcc for kernels
 # (may produce much more efficient code on some architecture, you 
@@ -253,14 +254,14 @@ NETLIB_BLAS_FULL_NAME	= libblas.a
 NETLIB_BLAS_NAME		= blas
 NETLIB_BLAS_DIR			= $(libdir)
 NETLIB_BLAS_LOCATION	= $(libdir)/$(NETLIB_BLAS_FULL_NAME)
-NETLIB_BLAS_CC_LINK		= -L$(libdir) -lblas
+NETLIB_BLAS_F77_LINK	= -L$(libdir) -lblas
 
 NETLIB_LAPACK_F77_OPTS 	= $(F77_COMMON)
 NETLIB_LAPACK_FULL_NAME	= liblapack.a
 NETLIB_LAPACK_NAME		= lapack
 NETLIB_LAPACK_DIR		= $(libdir)
 NETLIB_LAPACK_LOCATION	= $(libdir)/$(NETLIB_LAPACK_FULL_NAME)
-NETLIB_LAPACK_CC_LINK	= -L$(libdir) -llapack
+NETLIB_LAPACK_F77_LINK	= -L$(libdir) -llapack
 
 #===========================================
 # ATLAS BLAS/LAPACK OPTIONS  (Don't touch)

@@ -53,7 +53,7 @@ build-custom:
 	# build objects
 	#cd $(WORKSRC) && $(MAKE) obj
 	# build static lib from it
-	@cd $(WORKSRC) && $(PMAKE) CC=$(CC) FORTRAN=$(F77) F77FLAGS=$(NETLIB_BLAS_F77_OPTS) AR=$(AR) RANLIB=$(RANLIB) LIBNAME=$(NETLIB_BLAS_FULL_NAME) lib
+	@cd $(WORKSRC) && $(PMAKE) CC=$(CC) FORTRAN=$(F77) F77FLAGS="$(NETLIB_BLAS_F77_OPTS)" AR=$(AR) RANLIB=$(RANLIB) LIBNAME=$(NETLIB_BLAS_FULL_NAME) lib
 	@$(MAKECOOKIE)
 
 install-custom:

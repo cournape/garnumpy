@@ -25,3 +25,6 @@ bootstrap/UFconfig/work
 bootstrap/umfpack/cookies
 bootstrap/umfpack/download
 bootstrap/umfpack/work
+tools/ipython/cookies
+tools/ipython/download
+tools/ipython/work
