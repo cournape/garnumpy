@@ -118,6 +118,9 @@ get_numpy_sitecfg()
             echo "[fftw3]"
             echo "library_dirs=$7"
             ;;
+        "system")
+            echo "[fftw3]"
+            ;;
         *)
             echo "Unknown fft: $6"
             return  1
@@ -139,6 +142,9 @@ get_scipy_dep()
     case $1 in
         "fftw3")
             echo "bootstrap/fftw3"
+            return 0
+            ;;
+        "system")
             return 0
             ;;
         *)

@@ -24,6 +24,7 @@ GARDIR ?= ../..
 # ok, but the results will be very... VERY ...strange.
 GARBUILD ?= $(shell gcc -dumpmachine)
 
+include $(GARDIR)/gar.cc.mk
 # include the configuration file to override any of these variables
 # no variable expansions or targets are allowed in these files.
 include $(GARDIR)/gar.conf.mk

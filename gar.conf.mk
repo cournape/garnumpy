@@ -87,37 +87,16 @@ LDFLAGS += -Wl,--export-dynamic -L$(libdir)
 #build_CXX ?= g++
 #build_LD ?= ld
 
-#===========================
-# Sensible compiler defaults
-#===========================
+#===============================
+# Compiler specific stuff here
+#===============================
 CC ?= gcc
 CXX ?= g++
-F77 = g77
+F77 ?= g77
 F95 = gfortran
 #LD	?= ld
 
-# If we use gfortran, we need the following library flags for linking
-LDFLAGS	+= -lgfortran -lm -lgfortranbegin
-
-# If -fno-f2c is used anywhere, use it EVERYWHERE !!!!!
-#F77_COMMON	= "-fno-f2c -O3 -funroll-all-loops "
-F77_COMMON	= -O3 -funroll-all-loops 
 FFLAGS	+= $(F77_COMMON)
-# Some C compilers need special library when using fortran libs
-C_FORTRAN_LIB = g2c
-
-## GARCH and GARHOST for main.  Override these for cross-compilation
-##main_GARCH ?= i386
-##main_GARHOST ?= i386-pc-linux-gnu
-#main_GARCH ?= 
-#main_GARHOST ?= 
-#
-## GARCH and GARHOST for build.  Do not change these.
-#build_GARCH := $(shell arch)
-#build_GARHOST := $(GARBUILD)
-#
-## Don't build these packages as in the build image
-#build_NODEPEND = devel/glibc devel/gcc-primitives
 
 # This is for foo-config chaos
 PKG_CONFIG_PATH=$(DESTDIR)$(libdir)/pkgconfig/
@@ -149,8 +128,10 @@ GARPKGDIR = $(GARPKGROOT)/$(GARNAME)
 # prepend the local file listing
 FILE_SITES = file://$(FILEDIR)/ file://$(GARCHIVEDIR)/
 
+# Gee, sourceforge mirror systems sucks !
 #SOURCEFORGEDL	= http://jaist.dl.sourceforge.net/sourceforge
-SOURCEFORGEDL	= http://dl.sourceforge.net/
+#SOURCEFORGEDL	= http://dl.sourceforge.net/
+SOURCEFORGEDL	= http://nchc.dl.sourceforge.net/sourceforge
 MASTER_SITES 	+= $(SOURCEFORGEDL)
 
 ## Extra configuration for the lnx-bbc build
@@ -206,8 +187,8 @@ GCC3_PATH		= /usr/bin/gcc-3.3
 #----------------------
 # General fftw3 options
 #----------------------
-# possible values: fftw3
-FFT			= fftw3
+# possible values: fftw3, system
+FFT			= system
 FFTW3_LIBDIR= $(libdir)
 
 #-----------------------
@@ -224,7 +205,7 @@ PYTHONPATH=$(main_libdir)/python$(PYVER)/site-packages:$(main_libdir)/python$(PY
 #----------------------
 # space separated list of package in scipy sandbox to add
 SCIPYSANDPKG = pyem svm
-SCIPYSANDPKG = 
+#SCIPYSANDPKG = 
 
 #------------
 # GNU TOOLS

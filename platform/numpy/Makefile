@@ -52,12 +52,12 @@ configure-custom:
 	$(FFT) $(FFT_LIB_DIR) \
 	$(UMFPACK_DIR) $(UMFPACK_INCDIR) $(AMD_DIR)> site.cfg
 	cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) \
-	setup.py config
+	setup.py config_fc $(NUMPY_CC_OPTS) config
 	@$(MAKECOOKIE)
 
 build-custom:
 	@cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) \
-	setup.py build 
+	setup.py config_fc $(NUMPY_CC_OPTS) build 
 	@$(MAKECOOKIE)
 
 install-custom:
