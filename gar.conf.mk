@@ -225,6 +225,10 @@ TAR = tar
 # If not ranlib available on yout system, setting it /bin/true should be OK
 RANLIB=ranlib
 
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# Starting from here, DO NOT TOUCH ANYTHING !!!!
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 #===========================================
 # Netlab BLAS/LAPACK OPTIONS  (Don't touch)
 #===========================================
@@ -311,4 +315,6 @@ FFTW3_F77_FLAGS 	= $(F77_COMMON)
 
 ifeq ($(FFT), fftw3)
 	FFT_LIB_DIR	= $(libdir)
+else
+	FFT_LIB_DIR	= /usr/lib
 endif

@@ -55,9 +55,9 @@ build-custom:
 	@cd $(WORKSRC) && $(MAKE) LIB="$(LDFLAGS)" CC=$(CC) \
 		AR="$(AR) rc" RANLIB=$(RANLIB) \
 		F77=$(F77) F77FLAGS="$(AMD_F77FLAGS)" \
-		BLAS="$(BLAS_F77_LINK) -l$(C_FORTRAN_LIB)" library
+		BLAS="$(BLAS_F77_LINK) $(C_FORTRAN_LDFLAGS)" library
 	@cd $(WORKSRC) && $(MAKE) LIB="$(LDFLAGS)" \
-		BLAS="$(BLAS_F77_LINK) -l$(C_FORTRAN_LIB)" \
+		BLAS="$(BLAS_F77_LINK) $(C_FORTRAN_LDFLAGS)" \
 		CC=$(CC) AR="$(AR) rc" RANLIB=$(RANLIB) \
 		F77=$(F77) F77FLAGS="$(AMD_F77FLAGS)" fortran
 	@$(MAKECOOKIE)

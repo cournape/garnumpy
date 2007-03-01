@@ -11,10 +11,13 @@ LDFLAGS	+= -lgfortran -lm -lgfortranbegin
 # F77_COMMON will be append to all packages, as the FFLAGS var
 # If -fno-f2c is used anywhere, use it EVERYWHERE !!!!!
 #F77_COMMON	= "-fno-f2c -O3 -funroll-all-loops "
-F77_COMMON	= -O3 -funroll-all-loops 
+GFORTRAN_FLAGS	+= -fno-second-underscore
+F77_COMMON		+= -O3 -funroll-all-loops 
+F77_COMMON		+= $(GFORTRAN_FLAGS)
 
-# Some C compilers need special library when using fortran libs
-C_FORTRAN_LIB = g2c
+# Some C compilers need special library when using fortran libs (eg g77)
+#C_FORTRAN_LDFLAGS = g2c
+C_FORTRAN_LDFLAGS = 
 
 # This is mandatory if you use gfortran (vs g77)
 NUMPY_CC_OPTS	= --fcompiler=gnu95

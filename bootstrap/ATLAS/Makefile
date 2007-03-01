@@ -44,7 +44,7 @@ post-extract:
 	@echo " ===> moving files to $(WORKSRC)"
 	@mv $(EXTRACTDIR)/ATLAS $(WORKSRC)
 	@mkdir -p $(WORKSRC)/$(ATLOBJDIR)
-	@cp $(FILEDIR)/P432SSE2.tgz $(WORKSRC)/CONFIG/ARCHS/
+	#@cp $(FILEDIR)/P432SSE2.tgz $(WORKSRC)/CONFIG/ARCHS/
 	@$(MAKECOOKIE)
 
 configure-custom:

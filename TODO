@@ -1,4 +1,4 @@
-Last Change: Wed Feb 28 08:00 PM 2007 J
+Last Change: Thu Mar 01 07:00 PM 2007 J
     - Clean umfpack mess: the makefile are a mess, we should replace it with
       our own Makefile (taking them from debian pkg ?)
     - for now, only CC=gcc and F77=g77 works, on ubuntu edgy:
@@ -8,8 +8,9 @@ Last Change: Wed Feb 28 08:00 PM 2007 J
       for gcc/g77, one for ICC, etc...)
     - fetch from SVN instead of release as option
     - sync env values in startgarnumpy and in gar.conf.mk
-    - -fno-f2c ? Use it or not with g77 ? For Atlas, set the fortran compiler
-      to same value than NETLIB
+    - handling dependencies is really ugly right now, with those shell
+      functions.  As we assume python, it may be much easier/reliable/prettier
+      to use it for those things
 
 Important points:
     - by default, build blas/lapack
