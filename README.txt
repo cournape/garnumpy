@@ -47,11 +47,12 @@ How to use ?
           often fail).
 
     Variable to adjust in gar.cc.mk (everything related to the build tools, 
-    mostly compiler, compiler options and link options)
+    mostly compiler, compiler options and link options should be set here)
         - CC, F77 and CXX: C, Fortran and C++ compilers
 
-    gar.cc.mk.g77: GNU build system with g77
-    gar.cc.mk.gfortran: GNU build system with gfortran for all Fortran code
+    You can use the two following working templates:
+    	- gar.cc.mk.g77: GNU build system with g77 for F77 code.
+    	- gar.cc.mk.gfortran: GNU build system with gfortran for all Fortran code.
 
 Supported softwares:
     - numpy and scipy (in platform)
