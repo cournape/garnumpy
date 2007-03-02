@@ -38,7 +38,6 @@ How to use ?
         - if you change main_prefix, you should change accordingly startgarnumpy.sh
 
     Other variable to adjust in gar.conf.mk:
-        - CC, F77 and CXX: C, Fortran and C++ compilers
         - BLASLAPACK: set to the wanted BLAS/LAPACK set. By default, netlib,
           but atlas (for using ATLAS BLAS/LAPACK) and system (using already
           installed BLAS/LAPACK) are also supported.
@@ -46,6 +45,14 @@ How to use ?
         - TESTNELIB: set to 1 to test the compiled NETLIB LAPACK library
         - SOURCEFORGEDL: set to a proper sourceforge mirror (redirection
           often fail).
+
+    Variable to adjust in gar.cc.mk (everything related to the build tools, 
+    mostly compiler, compiler options and link options should be set here)
+        - CC, F77 and CXX: C, Fortran and C++ compilers
+
+    You can use the two following working templates:
+    	- gar.cc.mk.g77: GNU build system with g77 for F77 code.
+    	- gar.cc.mk.gfortran: GNU build system with gfortran for all Fortran code.
 
 Supported softwares:
     - numpy and scipy (in platform)
@@ -61,5 +68,5 @@ Dependencises:
     Fedora Core (6):
         You can build a fully functional numpy + scipy by installing the following:
 
-        sudo yum install python python-devel gcc gcc-gfortran gcc-c++ swig
+        sudo yum install python python-devel gcc compat-gcc-34-g77 gcc-c++ swig
 
