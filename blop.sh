@@ -131,7 +131,8 @@ get_numpy_sitecfg()
     echo "library_dirs=$8"
     echo "include_dirs=$9"
     echo "[amd]"
-    echo "library_dirs=$10"
+    shift 1
+    echo "library_dirs=$9"
 
     return 0
 }

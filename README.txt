@@ -57,3 +57,9 @@ Dependencises:
         You can build a fully functional scipy + matplotlib by installing the following:
 
         sudo apt-get install python python-dev gcc g77 python-gtk2-dev patch swig g++
+
+    Fedora Core (6):
+        You can build a fully functional numpy + scipy by installing the following:
+
+        sudo yum install python python-devel gcc gcc-gfortran gcc-c++ swig
+

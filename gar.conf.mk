@@ -26,8 +26,8 @@ ALL_DESTIMGS = main build rootbin lnximg singularity
 # /usr/etc or /usr/var
 
 # Directory config for the "main" image
-main_prefix ?= /usr/media/src/src/dsp/garnumpy/garnumpyinstall
-#main_prefix ?= $(HOME)/garnumpyinstall
+#main_prefix ?= /usr/media/src/src/dsp/garnumpy/garnumpyinstall
+main_prefix ?= $(HOME)/garnumpyinstall
 main_exec_prefix = $(prefix)
 main_bindir = $(exec_prefix)/bin
 main_sbindir = $(exec_prefix)/sbin
@@ -119,8 +119,8 @@ export GARBUILD
 export PATH LD_LIBRARY_PATH #LD_PRELOAD
 export PKG_CONFIG_PATH
 
-GARCHIVEROOT ?= /usr/media/src/src/dsp/garnumpy/garnumpyarchives
-#GARCHIVEROOT ?= $(HOME)/garnumpyarchives
+#GARCHIVEROOT ?= /usr/media/src/src/dsp/garnumpy/garnumpyarchives
+GARCHIVEROOT ?= $(HOME)/garnumpyarchives
 GARCHIVEDIR = $(GARCHIVEROOT)/$(DISTNAME)
 GARPKGROOT ?= /var/www/garpkg
 GARPKGDIR = $(GARPKGROOT)/$(GARNAME)
@@ -176,7 +176,7 @@ SYSTEM_LAPACK_DIR=
 
 # Set to 0 to skip lapack testing, 1 for testing (take time, but strongly
 # advised if you intend to use this for production purpose)
-TEST_NETLIB_LAPACK=0
+TEST_NETLIB_LAPACK=1
 
 # Set to 1 to try using gcc3 instead of current gcc for kernels
 # (may produce much more efficient code on some architecture, you 
@@ -188,7 +188,7 @@ GCC3_PATH		= /usr/bin/gcc-3.3
 # General fftw3 options
 #----------------------
 # possible values: fftw3, system
-FFT			= system
+FFT			= fftw3
 FFTW3_LIBDIR= $(libdir)
 
 #-----------------------
@@ -204,8 +204,8 @@ PYTHONPATH=$(main_libdir)/python$(PYVER)/site-packages:$(main_libdir)/python$(PY
 # SCIPY related options
 #----------------------
 # space separated list of package in scipy sandbox to add
-SCIPYSANDPKG = pyem svm
-#SCIPYSANDPKG = 
+#SCIPYSANDPKG = pyem svm
+SCIPYSANDPKG = 
 
 #------------
 # GNU TOOLS
@@ -232,8 +232,6 @@ RANLIB=ranlib
 #===========================================
 # Netlab BLAS/LAPACK OPTIONS  (Don't touch)
 #===========================================
-LAPACKOSNAME	= LINUX
-
 NETLIB_BLAS_F77_OPTS 	= $(F77_COMMON) 
 NETLIB_BLAS_FULL_NAME	= libblas.a
 NETLIB_BLAS_NAME		= blas
