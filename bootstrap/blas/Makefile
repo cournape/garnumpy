@@ -45,15 +45,14 @@ include ../../gar.mk
 # to the WORKSRC
 post-extract:
 	@echo " ===> moving files to $(WORKSRC)"
-	@mkdir $(WORKSRC)
-	@mv $(EXTRACTDIR)/*.f $(WORKSRC)
+	@mv $(EXTRACTDIR)/BLAS $(WORKSRC)
 	@$(MAKECOOKIE)
 
 build-custom:
 	# build objects
 	#cd $(WORKSRC) && $(MAKE) obj
 	# build static lib from it
-	@cd $(WORKSRC) && $(PMAKE) CC=$(CC) FORTRAN=$(F77) F77FLAGS="$(NETLIB_BLAS_F77_OPTS)" AR=$(AR) RANLIB=$(RANLIB) LIBNAME=$(NETLIB_BLAS_FULL_NAME) lib
+	cd $(WORKSRC) && $(PMAKE) CC=$(CC) FORTRAN=$(F77) F77FLAGS="$(NETLIB_BLAS_F77_OPTS)" AR=$(AR) RANLIB=$(RANLIB) LIBNAME=$(NETLIB_BLAS_FULL_NAME) lib
 	@$(MAKECOOKIE)
 
 install-custom:
