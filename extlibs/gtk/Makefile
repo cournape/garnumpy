@@ -17,7 +17,7 @@ endef
 
 # Dependencies are of the form categorydir/packagedir
 # LIBDEPS are for libraries, and DEPENDS are for everything else
-LIBDEPS = extlibs/glib
+LIBDEPS = extlibs/glib extlibs/pango extlibs/atk extlibs/cairo
 DEPENDS =
 # Builddeps are installed in the build DESTIMG
 BUILDDEPS =

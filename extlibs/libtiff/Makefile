@@ -1,31 +1,29 @@
-GARNAME = matplotlib
-GARVERSION = 0.90.0
-CATEGORIES = 
+GARNAME = tiff
+GARVERSION = 3.8.2
+CATEGORIES = extlibs
 
-MASTER_SITES = $(SOURCEFORGEDL)/matplotlib/
+MASTER_SITES = http://dl.maptools.org/dl/libtiff/
 
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
 PATCHFILES = 
-MAINTAINER = 
+MAINTAINER = David Cournapeau <david@ar.media.kyoto-u.ac.jp>
 # GPL, GPL2, BSD, MIT, etc. Or add the URL to any custom license
 LICENSE = 
 
 DESCRIPTION = 
 define BLURB
-	TODO: MPL blurb
+	TODO: SWIG blurb
 endef
 
 # Dependencies are of the form categorydir/packagedir
 # LIBDEPS are for libraries, and DEPENDS are for everything else
 LIBDEPS =
-DEPENDS = platform/numpy
+DEPENDS =
 # Builddeps are installed in the build DESTIMG
 BUILDDEPS =
 
 
 CONFIGURE_SCRIPTS = custom
-#BUILD_SCRIPTS = $(WORKSRC)/Makefile
-#INSTALL_SCRIPTS = $(WORKSRC)/Makefile
 BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 
@@ -39,17 +37,14 @@ INSTALL_OVERRIDE_DIRS =
 # This should go before any hand-made rules.
 include ../../gar.mk
 
-pre-everything:
-
 configure-custom:
-	cd $(WORKSRC) && PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py config
+	cd $(WORKSRC) && CC=$(CC) ./configure $(DIRPATHS) --enable-shared=yes 
 	@$(MAKECOOKIE)
 
 build-custom:
-	@cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py build
+	@cd $(WORKSRC) && $(PMAKE)
 	@$(MAKECOOKIE)
 
 install-custom:
-	@cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) setup.py install --prefix=$(prefix)
+	@cd $(WORKSRC) && $(MAKE) install
 	@$(MAKECOOKIE)
-

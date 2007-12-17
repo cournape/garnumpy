@@ -40,3 +40,12 @@ extlibs/atk/work
 extlibs/libpng/cookies
 extlibs/libpng/download
 extlibs/libpng/work
+extlibs/cairo/cookies
+extlibs/cairo/download
+extlibs/cairo/work
+extlibs/gtk/cookies
+extlibs/gtk/work
+extlibs/gtk/download
+gui/matplotlib/cookies
+gui/matplotlib/download
+gui/matplotlib/work

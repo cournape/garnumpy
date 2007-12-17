@@ -114,7 +114,7 @@ BUILD_ENV += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
 INSTALL_ENV += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
 MANIFEST_ENV += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
 
-LD_LIBRARY_PATH := $(main_libdir)
+LD_LIBRARY_PATH = $(libdir)
 # Global environment
 export GARBUILD
 export PATH LD_LIBRARY_PATH #LD_PRELOAD
@@ -161,8 +161,8 @@ BITARCH	= 32
 
 # valid values for BLASLAPACK: atlas, system or netlib
 #BLASLAPACK	= system
-#BLASLAPACK	= atlas
-BLASLAPACK	= netlib
+BLASLAPACK	= atlas
+#BLASLAPACK	= netlib
 
 # - system: assumes that blas lapack are available, you should set
 #   SYSTEM_BLAS_NAME, SYSTEM_BLAS_DIR, SYSTEM_LAPACK_DIR, SYSTEM_LAPACK_NAME
