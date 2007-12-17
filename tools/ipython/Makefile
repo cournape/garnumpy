@@ -1,5 +1,5 @@
 GARNAME = ipython
-GARVERSION = 0.7.3
+GARVERSION = 0.8.2
 CATEGORIES = 
 
 MASTER_SITES = http://ipython.scipy.org/dist/
