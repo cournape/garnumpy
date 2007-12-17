@@ -114,6 +114,7 @@ BUILD_ENV += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
 INSTALL_ENV += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
 MANIFEST_ENV += $(foreach TTT,$(STAGE_EXPORTS),$(TTT)="$($(TTT))")
 
+LD_LIBRARY_PATH := $(main_libdir)
 # Global environment
 export GARBUILD
 export PATH LD_LIBRARY_PATH #LD_PRELOAD
