@@ -28,3 +28,9 @@ bootstrap/umfpack/work
 tools/ipython/cookies
 tools/ipython/download
 tools/ipython/work
+extlibs/glib/cookies
+extlibs/glib/download
+extlibs/glib/work
+extlibs/pango/cookies
+extlibs/pango/download
+extlibs/pango/work

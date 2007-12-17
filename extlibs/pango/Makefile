@@ -42,7 +42,7 @@ configure-custom:
 	@$(MAKECOOKIE)
 
 build-custom:
-	@cd $(WORKSRC) && $(PMAKE)
+	@cd $(WORKSRC) && PATH=$(main_bindir):$(PATH) $(PMAKE)
 	@$(MAKECOOKIE)
 
 install-custom:
