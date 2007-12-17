@@ -34,3 +34,9 @@ extlibs/glib/work
 extlibs/pango/cookies
 extlibs/pango/download
 extlibs/pango/work
+extlibs/atk/cookies
+extlibs/atk/download
+extlibs/atk/work
+extlibs/libpng/cookies
+extlibs/libpng/download
+extlibs/libpng/work
