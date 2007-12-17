@@ -27,7 +27,7 @@ ALL_DESTIMGS = main build rootbin lnximg singularity
 
 # Directory config for the "main" image
 #main_prefix ?= /usr/media/src/src/dsp/garnumpy/garnumpyinstall
-main_prefix ?= $(HOME)/garnumpyinstall
+main_prefix ?= /export/kikazaru2/garnumpyinstall
 main_exec_prefix = $(prefix)
 main_bindir = $(exec_prefix)/bin
 main_sbindir = $(exec_prefix)/sbin
