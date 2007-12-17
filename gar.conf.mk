@@ -27,7 +27,7 @@ ALL_DESTIMGS = main build rootbin lnximg singularity
 
 # Directory config for the "main" image
 #main_prefix ?= /usr/media/src/src/dsp/garnumpy/garnumpyinstall
-main_prefix ?= /export/kikazaru2/garnumpyinstall
+main_prefix ?= /export/bbc8/garnumpyinstall
 main_exec_prefix = $(prefix)
 main_bindir = $(exec_prefix)/bin
 main_sbindir = $(exec_prefix)/sbin
@@ -151,6 +151,7 @@ MASTER_SITES 	+= $(SOURCEFORGEDL)
 # cmdline, as many libraries have broken makefile wrt this feature, and/or
 # some libraries test need single job.
 PMAKE	= $(MAKE) -j 4
+BITARCH	= 32
 
 #----------------------
 # General BLAS/LAPACK 
@@ -177,7 +178,7 @@ SYSTEM_LAPACK_DIR=
 
 # Set to 0 to skip lapack testing, 1 for testing (take time, but strongly
 # advised if you intend to use this for production purpose)
-TEST_NETLIB_LAPACK=1
+TEST_NETLIB_LAPACK=0
 
 # Set to 1 to try using gcc3 instead of current gcc for kernels
 # (may produce much more efficient code on some architecture, you 
