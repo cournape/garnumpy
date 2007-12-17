@@ -38,11 +38,11 @@ INSTALL_OVERRIDE_DIRS =
 include ../../gar.mk
 
 configure-custom:
-	cd $(WORKSRC) && CC=$(CC) ./configure $(DIRPATHS) 
+	cd $(WORKSRC) && PATH=$(main_bindir) LD_LIBRARY_PATH=$(LD_LIBRARY_PATH) CC=$(CC) ./configure $(DIRPATHS) 
 	@$(MAKECOOKIE)
 
 build-custom:
-	@cd $(WORKSRC) && $(PMAKE)
+	@cd $(WORKSRC) && PATH=$(main_bindir):$(PATH) LD_LIBRARY_PATH=$(LD_LIBRARY_PATH) $(PMAKE)
 	@$(MAKECOOKIE)
 
 install-custom:
