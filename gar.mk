@@ -27,6 +27,7 @@ GARBUILD ?= $(shell gcc -dumpmachine)
 include $(GARDIR)/gar.cc.mk
 # include the configuration file to override any of these variables
 # no variable expansions or targets are allowed in these files.
+include $(GARDIR)/garnumpy.conf.mk
 include $(GARDIR)/gar.conf.mk
 -include $(addprefix $(GARDIR)/,$(GAR_EXTRA_CONF)) package-api.mk
 
