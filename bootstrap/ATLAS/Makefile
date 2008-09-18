@@ -5,7 +5,7 @@ CATEGORIES =
 MASTER_SITES += $(SOURCEFORGEDL)/math-atlas/
 
 DISTFILES = $(GARNAME)$(GARVERSION).tar.bz2
-PATCHFILES = garnumpy-config.diff #gar-ppc-fix.diff
+PATCHFILES = 
 MAINTAINER = David Cournapeau <david@ar.media.kyoto-u.ac.jp>
 # GPL, GPL2, BSD, MIT, etc. Or add the URL to any custom license
 LICENSE = 
@@ -44,13 +44,14 @@ post-extract:
 	@echo " ===> moving files to $(WORKSRC)"
 	@mv $(EXTRACTDIR)/ATLAS $(WORKSRC)
 	@mkdir -p $(WORKSRC)/$(ATLOBJDIR)
-	#@cp $(FILEDIR)/P432SSE2.tgz $(WORKSRC)/CONFIG/ARCHS/
 	@$(MAKECOOKIE)
 
 configure-custom:
 	@echo "======================================="
 	@echo "		CONFIGURING ATLAS"
 	@echo "======================================="
+	@echo "Setting performance throttling"
+	cpufreq-selector -g performance
 	@cd $(WORKSRC)/$(ATLOBJDIR) && ../configure -Si archdef 1\
 		--with-netlib-lapack=$(libdir)/$(NETLIB_LAPACK_FULL_NAME) \
 		--prefix=$(ATLASPREFIX) \
