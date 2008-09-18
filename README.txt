@@ -32,12 +32,13 @@ How to use ?
     Longer story: 
 
     before the above, you should:
-        - set main_prefix and GARCHIVEROOT in gar.conf.mk to some values
+	- set main_prefix and GARCHIVEROOT in garnumpy.conf.mk to some values
         - make garchive will download all the sources in one step (useful if
-          you plan on trying different build options)
+	  you plan on trying different build options) and put them in
+	  GARCHIVEROOT
         - if you change main_prefix, you should change accordingly startgarnumpy.sh
 
-    Other variable to adjust in gar.conf.mk:
+    Other variable to adjust in garnumpy.conf.mk:
         - BLASLAPACK: set to the wanted BLAS/LAPACK set. By default, netlib,
           but atlas (for using ATLAS BLAS/LAPACK) and system (using already
           installed BLAS/LAPACK) are also supported.
@@ -69,4 +70,3 @@ Dependencises:
         You can build a fully functional numpy + scipy by installing the following:
 
         sudo yum install python python-devel gcc compat-gcc-34-g77 gcc-c++ swig
-
