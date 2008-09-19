@@ -67,7 +67,7 @@ GCC3_PATH		= /usr/bin/gcc-3.3
 # General fftw3 options
 #----------------------
 # possible values: fftw3, system
-FFT			= fftw3
+FFT			= system
 FFTW3_LIBDIR= $(libdir)
 
 #-----------------------
