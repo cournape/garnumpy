@@ -3,7 +3,7 @@
 
 # Directory config for the "main" image
 #main_prefix ?= /usr/media/src/src/dsp/garnumpy/garnumpyinstall
-main_prefix ?= /export/bbc8/garnumpyinstall
+main_prefix ?= $(HOME)/garnumpyinstall
 
 #===============================
 # Compiler specific stuff here
