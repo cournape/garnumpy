@@ -59,10 +59,18 @@ Supported softwares:
     - matplolib (in gui)
 
 Dependencises:
-    UBUNTU (6.10):
+    UBUNTU (up to 7.10):
         You can build a fully functional scipy + matplotlib by installing the following:
 
         sudo apt-get install python python-dev gcc g77 python-gtk2-dev patch swig g++
+
+	You should copy the gar.cc.mk.g77 to gar.cc.mk, to, to force usage of
+        g77.
+
+    UBUNTU (8.04 and later):
+        You can build a fully functional scipy + matplotlib by installing the following:
+
+        sudo apt-get install python python-dev gcc gfortran python-gtk2-dev patch swig g++
 
     Fedora Core (6):
         You can build a fully functional numpy + scipy by installing the following:
