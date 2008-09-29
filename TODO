@@ -1,4 +1,6 @@
 Last Change: Thu Mar 01 07:00 PM 2007 J
+    - Look into vellum and build.out to replace gar. More portable, easier to
+      deal with ? Investigate this before all the other
     - Clean umfpack mess: the makefile are a mess, we should replace it with
       our own Makefile (taking them from debian pkg ?)
     - for now, only CC=gcc and F77=g77 works, on ubuntu edgy:
