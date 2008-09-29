@@ -22,19 +22,19 @@ How to use ?
         cd platform/scipy; make install
         source startgarnumpy.sh
 
-    
     will install numpy, scipy and all the dependencies (by default, it will
-    build NETLIB BLAS/LAPACK), if you have a "standard" GNU userland, and set up
-    your shell to use the garnumpy-installed packages by default.
+    build NETLIB BLAS/LAPACK), if you have a "standard" GNU userland, and set
+    up your shell to use the garnumpy-installed packages by default.
         
     Longer story: 
 
     before the above, you should:
-	- set main_prefix and GARCHIVEROOT in garnumpy.conf.mk to some values
+        - set main_prefix and GARCHIVEROOT in garnumpy.conf.mk to some values
         - make garchive will download all the sources in one step (useful if
-	  you plan on trying different build options) and put them in
-	  GARCHIVEROOT
-        - if you change main_prefix, you should change accordingly startgarnumpy.sh
+          you plan on trying different build options) and put them in
+          GARCHIVEROOT
+        - if you change main_prefix, you should change accordingly
+          startgarnumpy.sh
 
     Other variable to adjust in garnumpy.conf.mk:
         - BLASLAPACK: set to the wanted BLAS/LAPACK set. By default, netlib,
@@ -45,13 +45,13 @@ How to use ?
         - SOURCEFORGEDL: set to a proper sourceforge mirror (redirection
           often fail).
 
-    Variable to adjust in gar.cc.mk (everything related to the build tools, 
+    Variable to adjust in gar.cc.mk (everything related to the build tools,
     mostly compiler, compiler options and link options should be set here)
         - CC, F77 and CXX: C, Fortran and C++ compilers
 
     You can use the two following working templates:
-    	- gar.cc.mk.g77: GNU build system with g77 for F77 code.
-    	- gar.cc.mk.gfortran: GNU build system with gfortran for all Fortran code.
+        - gar.cc.mk.g77: GNU build system with g77 for F77 code.
+        - gar.cc.mk.gfortran: GNU build system with gfortran for all Fortran code.
 
 Supported softwares:
     - numpy and scipy (in platform)
@@ -64,7 +64,7 @@ Dependencises:
 
         sudo apt-get install python python-dev gcc g77 python-gtk2-dev patch swig g++
 
-	You should copy the gar.cc.mk.g77 to gar.cc.mk, to, to force usage of
+        You should copy the gar.cc.mk.g77 to gar.cc.mk, to, to force usage of
         g77.
 
     UBUNTU (8.04 and later):
