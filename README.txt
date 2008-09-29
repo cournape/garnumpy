@@ -20,15 +20,13 @@ How to use ?
     Short story:
         
         cd platform/scipy; make install
-    
-    will install numpy, scipy and all the dependencies (by default, it will
-    build fftw3, and NETLIB BLAS/LAPACK), if you have a "standard" GNU userland.
-    Then, in a shell:
-        
         source startgarnumpy.sh
 
-    will set the necessary env variables to use scipy in the current shell.
-
+    
+    will install numpy, scipy and all the dependencies (by default, it will
+    build NETLIB BLAS/LAPACK), if you have a "standard" GNU userland, and set up
+    your shell to use the garnumpy-installed packages by default.
+        
     Longer story: 
 
     before the above, you should:
