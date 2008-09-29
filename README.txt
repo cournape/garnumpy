@@ -41,7 +41,7 @@ How to use ?
           but atlas (for using ATLAS BLAS/LAPACK) and system (using already
           installed BLAS/LAPACK) are also supported.
         - SCIPYSANDPKG: a list of packages in scipy sandbox to install
-        - TESTNELIB: set to 1 to test the compiled NETLIB LAPACK library
+        - TESTNETLIB: set to 1 to test the compiled NETLIB LAPACK library
         - SOURCEFORGEDL: set to a proper sourceforge mirror (redirection
           often fail).
 
