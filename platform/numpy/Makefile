@@ -1,21 +1,21 @@
 GARNAME = numpy
 GARVERSION = 1.2.0
-CATEGORIES = 
+CATEGORIES =
 
 MASTER_SITES = $(SOURCEFORGEDL)/numpy/
 
 DISTFILES = $(GARNAME)-$(GARVERSION).tar.gz
-PATCHFILES = 
-MAINTAINER = 
+PATCHFILES =
+MAINTAINER =
 # GPL, GPL2, BSD, MIT, etc. Or add the URL to any custom license
 LICENSE = BSD
 
-DESCRIPTION = 
+DESCRIPTION =
 define BLURB
  NumPy is a python package which gives python a fast array package for numeric
  computation.
 
- NumPy is a replacement of Numeric Python that adds the features of numarray.  
+ NumPy is a replacement of Numeric Python that adds the features of numarray.
 endef
 
 # Dependencies are of the form categorydir/packagedir
@@ -34,11 +34,11 @@ BUILD_SCRIPTS = custom
 INSTALL_SCRIPTS = custom
 
 CONFIGURE_ARGS = $(DIRPATHS)
-NODIRPATHS = 
+NODIRPATHS =
 
 # If some dirs are trying to install into /, list their names
 # here, such as: prefix bindir mandir
-INSTALL_OVERRIDE_DIRS = 
+INSTALL_OVERRIDE_DIRS =
 
 # This should go before any hand-made rules.
 include ../../gar.mk
@@ -57,7 +57,7 @@ configure-custom:
 
 build-custom:
 	@cd $(WORKSRC) && PYTHONPATH=$(PYTHONPATH) $(PYTHON) \
-	setup.py config_fc $(NUMPY_CC_OPTS) build 
+	setup.py config_fc $(NUMPY_CC_OPTS) build
 	@$(MAKECOOKIE)
 
 install-custom:
